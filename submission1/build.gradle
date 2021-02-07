@@ -1,6 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.30"
+    ext {
+        kotlin_version = "1.4.30"
+        dagger_hilt = "2.28-alpha"
+        retrofit_version = '2.6.0'
+        retrofit_logging_interceptor_version = '4.3.1'
+        moshi = "2.7.0"
+        lifecycle_component_version = '2.2.0'
+        coroutines = "1.4.1"
+        glide_version = '4.11.0'
+        timber_version = '4.7.1'
+    }
     repositories {
         google()
         jcenter()
@@ -9,6 +19,8 @@ buildscript {
         classpath "com.android.tools.build:gradle:4.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
+        //dagger hilt
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
