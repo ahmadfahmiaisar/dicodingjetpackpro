@@ -7,15 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.submission1.abstraction.UseCase
 import com.example.submission1.data.vo.Result
-import com.example.submission1.domain.entity.NowPlaying
+import com.example.submission1.domain.entity.movie.MovieNowPlaying
 import com.example.submission1.domain.usecase.GetMovieNowPlayingUseCase
 import kotlinx.coroutines.launch
 
 class MoviesViewModel @ViewModelInject constructor(private val getMovieNowPlayingUseCase: GetMovieNowPlayingUseCase) :
     ViewModel() {
 
-    private val _movie = MutableLiveData<Result<List<NowPlaying>>>()
-    val movie: LiveData<Result<List<NowPlaying>>>
+    private val _movie = MutableLiveData<Result<List<MovieNowPlaying>>>()
+    val movie: LiveData<Result<List<MovieNowPlaying>>>
         get() = _movie
 
     fun getMovie() {

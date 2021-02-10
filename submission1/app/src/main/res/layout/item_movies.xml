@@ -7,7 +7,7 @@
 
         <variable
             name="movie"
-            type="com.example.submission1.domain.entity.NowPlaying" />
+            type="com.example.submission1.domain.entity.movie.MovieNowPlaying" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

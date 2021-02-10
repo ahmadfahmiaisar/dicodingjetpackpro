@@ -1,6 +1,6 @@
-package com.example.submission1.domain.entity
+package com.example.submission1.domain.entity.movie
 
-data class NowPlaying(
+data class MovieNowPlaying(
     val id: Int,
     val overview: String,
     val posterPath: String,

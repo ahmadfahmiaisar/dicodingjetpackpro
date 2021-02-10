@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.submission1.databinding.ItemMoviesBinding
-import com.example.submission1.domain.entity.NowPlaying
+import com.example.submission1.domain.entity.movie.MovieNowPlaying
 import com.example.submission1.util.loadUrl
 
-class MoviesRecycleAdapter(private var nowPlaying: List<NowPlaying>) :
+class MoviesRecycleAdapter(private var movieNowPlaying: List<MovieNowPlaying>) :
     RecyclerView.Adapter<MoviesRecycleAdapter.ViewHolder>() {
 
-    private var onMoviePressed: (NowPlaying) -> Unit = {}
+    private var onMoviePressed: (MovieNowPlaying) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -19,27 +19,27 @@ class MoviesRecycleAdapter(private var nowPlaying: List<NowPlaying>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(nowPlaying[position], onMoviePressed)
+        holder.bind(movieNowPlaying[position], onMoviePressed)
     }
 
-    override fun getItemCount(): Int = nowPlaying.size
+    override fun getItemCount(): Int = movieNowPlaying.size
 
     class ViewHolder(private val binding: ItemMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(nowPlaying: NowPlaying, onMoviePressed: (NowPlaying) -> Unit) {
-            binding.movie = nowPlaying
-            binding.ivMovie.loadUrl(nowPlaying.posterPath)
-            binding.root.setOnClickListener { onMoviePressed(nowPlaying) }
+        fun bind(movieNowPlaying: MovieNowPlaying, onMoviePressed: (MovieNowPlaying) -> Unit) {
+            binding.movie = movieNowPlaying
+            binding.ivMovie.loadUrl(movieNowPlaying.posterPath)
+            binding.root.setOnClickListener { onMoviePressed(movieNowPlaying) }
             binding.executePendingBindings()
         }
     }
 
-    fun refreshMovieNowPlaying(nowPlaying: List<NowPlaying>) {
-        this.nowPlaying = nowPlaying
+    fun refreshMovieNowPlaying(movieNowPlaying: List<MovieNowPlaying>) {
+        this.movieNowPlaying = movieNowPlaying
         notifyDataSetChanged()
     }
 
-    fun setOnMoviePressed(movie: (NowPlaying) -> Unit) {
+    fun setOnMoviePressed(movie: (MovieNowPlaying) -> Unit) {
         this.onMoviePressed = movie
     }
 }
