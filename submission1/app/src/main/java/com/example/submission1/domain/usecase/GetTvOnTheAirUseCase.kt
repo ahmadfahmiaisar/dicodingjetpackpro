@@ -3,14 +3,14 @@ package com.example.submission1.domain.usecase
 import com.example.submission1.abstraction.UseCase
 import com.example.submission1.data.vo.Result
 import com.example.submission1.domain.entity.TvOnTheAir
-import com.example.submission1.domain.repository.MovieRepository
+import com.example.submission1.domain.repository.TvShowRepository
 import com.example.submission1.util.IMAGE_BASE_URL_POSTER
 import javax.inject.Inject
 
-class GetTvOnTheAirUseCase @Inject constructor(private val movieRepository: MovieRepository) :
+class GetTvOnTheAirUseCase @Inject constructor(private val tvShowRepository: TvShowRepository) :
     UseCase<UseCase.None, Result<List<TvOnTheAir>>>() {
     override suspend fun invoke(params: None): Result<List<TvOnTheAir>> {
-        return handleData(movieRepository.getTvOnTheAir())
+        return handleData(tvShowRepository.getTvOnTheAir())
     }
 
     private fun handleData(result: Result<List<TvOnTheAir>>): Result<List<TvOnTheAir>> {
