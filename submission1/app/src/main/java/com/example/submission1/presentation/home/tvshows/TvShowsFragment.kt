@@ -7,6 +7,7 @@ import com.example.submission1.R
 import com.example.submission1.abstraction.BaseFragment
 import com.example.submission1.data.vo.Result
 import com.example.submission1.databinding.FragmentTvShowsBinding
+import com.example.submission1.presentation.home.tvshows.detail.TvShowDetailActivity
 import com.example.submission1.util.gone
 import com.example.submission1.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +55,7 @@ class TvShowFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>() 
         binding.recyclerView.adapter = adapter
 
         adapter.setOnTvShowPressed {
-            //TODO in detail
+            TvShowDetailActivity.start(requireActivity(), it.id)
         }
     }
 }

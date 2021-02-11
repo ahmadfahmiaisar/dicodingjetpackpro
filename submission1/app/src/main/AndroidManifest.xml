@@ -23,8 +23,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.detail.MovieDetailActivity"
+            android:name=".presentation.home.movies.detail.MovieDetailActivity"
             android:label="Detail Movie"
+            android:parentActivityName=".presentation.home.HomeActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.home.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".presentation.home.tvshows.detail.TvShowDetailActivity"
+            android:label="TV Show Detail"
             android:parentActivityName=".presentation.home.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data

@@ -8,7 +8,7 @@ import com.example.submission1.R
 import com.example.submission1.abstraction.BaseFragment
 import com.example.submission1.data.vo.Result
 import com.example.submission1.databinding.FragmentMoviesBinding
-import com.example.submission1.presentation.detail.MovieDetailActivity
+import com.example.submission1.presentation.home.movies.detail.MovieDetailActivity
 import com.example.submission1.util.gone
 import com.example.submission1.util.visible
 import dagger.hilt.android.AndroidEntryPoint

@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.home.movies.detail.MovieDetailActivity">
+    tools:context=".presentation.home.tvshows.detail.TvShowDetailActivity">
 
     <data>
 
         <variable
-            name="movieDetail"
-            type="com.example.submission1.domain.entity.movie.MovieDetailUiModel" />
+            name="tvDetail"
+            type="com.example.submission1.domain.entity.tvshow.TvShowDetailUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@{movieDetail.title}"
+            android:text="@{tvDetail.name}"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/iv_movie_detail"
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{movieDetail.popularity}"
+            android:text="@{tvDetail.popularity}"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             tools:text="popularity" />
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{movieDetail.releaseDate}"
+            android:text="@{tvDetail.lastAirDate}"
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             tools:text="release date" />
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{movieDetail.voteAverage}"
+            android:text="@{tvDetail.voteAverage}"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             tools:text="vote average" />
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{movieDetail.voteCount}"
+            android:text="@{tvDetail.voteCount}"
             app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             tools:text="vote count" />
@@ -94,7 +94,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="@{movieDetail.overview}"
+            android:text="@{tvDetail.overview}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_movie_detail"
