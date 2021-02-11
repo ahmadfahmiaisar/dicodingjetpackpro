@@ -3,17 +3,18 @@ package com.example.submission1.domain.usecase.movie
 import com.example.submission1.abstraction.UseCase
 import com.example.submission1.data.vo.Result
 import com.example.submission1.domain.entity.movie.MovieDetail
+import com.example.submission1.domain.entity.movie.MovieDetailUiModel
 import com.example.submission1.domain.repository.MovieRepository
 import com.example.submission1.util.IMAGE_BASE_URL_POSTER
 import javax.inject.Inject
 
 class GetMovieDetailUseCase @Inject constructor(private val repository: MovieRepository) :
-    UseCase<Int, Result<MovieDetail>>() {
-    override suspend fun invoke(params: Int): Result<MovieDetail> {
+    UseCase<Int, Result<MovieDetailUiModel>>() {
+    override suspend fun invoke(params: Int): Result<MovieDetailUiModel> {
         return handleData(repository.getMovieDetail(params))
     }
 
-    private fun handleData(result: Result<MovieDetail>): Result<MovieDetail> {
+    private fun handleData(result: Result<MovieDetail>): Result<MovieDetailUiModel> {
         return when (result) {
             is Result.Success -> Result.Success(result.data.toUiModel())
             is Result.Error -> Result.Error(result.cause, result.code, result.errorMessage)
@@ -21,16 +22,16 @@ class GetMovieDetailUseCase @Inject constructor(private val repository: MovieRep
         }
     }
 
-    private fun MovieDetail.toUiModel(): MovieDetail {
-        return MovieDetail(
+    private fun MovieDetail.toUiModel(): MovieDetailUiModel {
+        return MovieDetailUiModel(
             this.id,
             this.overview,
-            this.popularity,
+            "${this.popularity}",
             "${IMAGE_BASE_URL_POSTER}${this.posterPath}",
             this.releaseDate,
             this.title,
-            this.voteAverage,
-            this.voteCount
+            " ${this.voteAverage}",
+            "${this.voteCount}"
         )
     }
 

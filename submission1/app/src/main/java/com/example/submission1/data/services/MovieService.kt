@@ -12,5 +12,8 @@ interface MovieService {
     suspend fun getMovieNowPlaying(@Query("api_key") apiKey: String = BuildConfig.API_KEY): NowPlayingDto
 
     @GET("movie/{movieId}")
-    suspend fun getMovieDetail(@Path("movieId") movieId: Int): MovieDetailDto
+    suspend fun getMovieDetail(
+        @Path("movieId") movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY
+    ): MovieDetailDto
 }

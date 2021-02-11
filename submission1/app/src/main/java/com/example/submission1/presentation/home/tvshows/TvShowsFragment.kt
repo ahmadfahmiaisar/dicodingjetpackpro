@@ -30,7 +30,7 @@ class TvShowFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>() 
         vm.tvShows.observe(viewLifecycleOwner, {
             when (it) {
                 is Result.Loading -> {
-                    binding.shimmerView.start(5, R.layout.placeholder_item_movie)
+                    binding.shimmerView.start(9, R.layout.placeholder_item_movie)
                     binding.recyclerView.gone()
                 }
                 is Result.Success -> {

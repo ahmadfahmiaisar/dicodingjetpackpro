@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Submission1">
-        <activity android:name=".presentation.detail.MovieDetailActivity"></activity>
         <activity
             android:name=".presentation.home.HomeActivity"
             android:label="Selamat datang gaes"
@@ -23,6 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.detail.MovieDetailActivity"
+            android:label="Detail Movie"
+            android:parentActivityName=".presentation.home.HomeActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.home.HomeActivity" />
+        </activity>
+
     </application>
 
 </manifest>

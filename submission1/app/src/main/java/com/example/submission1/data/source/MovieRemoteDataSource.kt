@@ -18,6 +18,6 @@ class MovieRemoteDataSource @Inject constructor(private val movieService: MovieS
         dispatcherProvider: CoroutineDispatcher,
         movieId: Int
     ): Result<MovieDetailDto> {
-        return safeApiCall(dispatcherProvider) { movieService.getMovieDetail(movieId) }
+        return safeApiCall(dispatcherProvider) { movieService.getMovieDetail(movieId = movieId) }
     }
 }

@@ -8,6 +8,7 @@ import com.example.submission1.R
 import com.example.submission1.abstraction.BaseFragment
 import com.example.submission1.data.vo.Result
 import com.example.submission1.databinding.FragmentMoviesBinding
+import com.example.submission1.presentation.detail.MovieDetailActivity
 import com.example.submission1.util.gone
 import com.example.submission1.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         vm.movie.observe(viewLifecycleOwner, {
             when (it) {
                 is Result.Loading -> {
-                    binding.shimmerView.start(5, R.layout.placeholder_item_movie)
+                    binding.shimmerView.start(9, R.layout.placeholder_item_movie)
                     binding.recyclerView.gone()
                 }
                 is Result.Success -> {
@@ -55,7 +56,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         binding.recyclerView.adapter = adapter
 
         adapter.setOnMoviePressed {
-            //TODO to screen detail
+            MovieDetailActivity.start(requireActivity(), it.id)
         }
     }
 }
