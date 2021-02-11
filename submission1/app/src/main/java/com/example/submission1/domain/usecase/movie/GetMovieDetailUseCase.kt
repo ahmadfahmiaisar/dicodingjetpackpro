@@ -25,13 +25,13 @@ class GetMovieDetailUseCase @Inject constructor(private val repository: MovieRep
     private fun MovieDetail.toUiModel(): MovieDetailUiModel {
         return MovieDetailUiModel(
             this.id,
-            this.overview,
-            "${this.popularity}",
+            "overview:\n${this.overview}",
+            "popularity: ${this.popularity}",
             "${IMAGE_BASE_URL_POSTER}${this.posterPath}",
-            this.releaseDate,
+            "release date: ${this.releaseDate}",
             this.title,
-            " ${this.voteAverage}",
-            "${this.voteCount}"
+            "vote average: ${this.voteAverage}",
+            "vote count: ${this.voteCount}"
         )
     }
 
