@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 
+@BindingAdapter("loadImage")
 fun ImageView.loadUrl(url: String) {
     Glide.with(this.context)
         .load(url)
@@ -19,14 +20,12 @@ fun ImageView.loadUrl(url: String) {
         .into(this)
 }
 
-@BindingAdapter("loadImage")
+@BindingAdapter("loadImagePotrait")
 fun loadPotraitImage(view: ImageView, imageUrl: String?) {
     if (imageUrl.isNullOrEmpty()) return
 
-    val url = "https://image.tmdb.org/t/p/w185/$imageUrl"
-
     Glide.with(view.context)
-        .load(url)
+        .load(imageUrl)
         .transition(DrawableTransitionOptions.withCrossFade())
         .thumbnail(0.2f)
         .placeholder(ColorDrawable(Color.LTGRAY))
