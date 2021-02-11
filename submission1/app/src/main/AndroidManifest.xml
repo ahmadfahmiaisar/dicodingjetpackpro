@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.submission1">
+    package="com.example.submission">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".App"
+        android:name="com.example.submission.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Submission1">
+        android:theme="@style/Theme.Submission">
         <activity
-            android:name=".presentation.home.HomeActivity"
+            android:name="com.example.submission.presentation.home.HomeActivity"
             android:label="Selamat datang gaes"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -23,22 +23,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.home.movies.detail.MovieDetailActivity"
+            android:name="com.example.submission.presentation.home.movies.detail.MovieDetailActivity"
             android:label="Detail Movie"
-            android:parentActivityName=".presentation.home.HomeActivity"
+            android:parentActivityName="com.example.submission.presentation.home.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".presentation.home.HomeActivity" />
+                android:value="com.example.submission.presentation.home.HomeActivity" />
         </activity>
         <activity
-            android:name=".presentation.home.tvshows.detail.TvShowDetailActivity"
+            android:name="com.example.submission.presentation.home.tvshows.detail.TvShowDetailActivity"
             android:label="TV Show Detail"
-            android:parentActivityName=".presentation.home.HomeActivity"
+            android:parentActivityName="com.example.submission.presentation.home.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".presentation.home.HomeActivity" />
+                android:value="com.example.submission.presentation.home.HomeActivity" />
         </activity>
 
     </application>

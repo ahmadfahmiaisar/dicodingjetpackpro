@@ -21,7 +21,7 @@
             tools:itemCount="10"
             tools:listitem="@layout/item_tv_show" />
 
-        <com.example.submission1.view.shimmerview.ShimmerView
+        <com.example.submission.view.shimmerview.ShimmerView
             android:id="@+id/shimmerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
