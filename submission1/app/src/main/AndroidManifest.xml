@@ -3,6 +3,7 @@
     package="com.example.submission1">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -11,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Submission1">
+        <activity android:name=".presentation.detail.MovieDetailActivity"></activity>
         <activity
             android:name=".presentation.home.HomeActivity"
             android:label="Selamat datang gaes"

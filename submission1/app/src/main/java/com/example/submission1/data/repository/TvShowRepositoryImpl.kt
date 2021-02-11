@@ -1,10 +1,10 @@
 package com.example.submission1.data.repository
 
 import com.example.submission1.data.dispatcher.DispatcherProvider
-import com.example.submission1.data.mapper.TvOnTheAirMapper
+import com.example.submission1.data.mapper.tvshow.TvOnTheAirMapper
 import com.example.submission1.data.source.TvShowRemoteDataSource
 import com.example.submission1.data.vo.Result
-import com.example.submission1.domain.entity.TvOnTheAir
+import com.example.submission1.domain.entity.tvshow.TvOnTheAir
 import com.example.submission1.domain.repository.TvShowRepository
 import javax.inject.Inject
 

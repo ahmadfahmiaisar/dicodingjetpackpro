@@ -1,7 +1,7 @@
-package com.example.submission1.data.mapper
+package com.example.submission1.data.mapper.movie
 
 import com.example.submission1.abstraction.Mapper
-import com.example.submission1.data.response.NowPlayingDto
+import com.example.submission1.data.response.movie.NowPlayingDto
 import com.example.submission1.domain.entity.movie.MovieNowPlaying
 import javax.inject.Inject
 

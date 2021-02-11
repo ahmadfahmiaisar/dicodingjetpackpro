@@ -1,6 +1,6 @@
 package com.example.submission1.data.source
 
-import com.example.submission1.data.response.TvOnTheAirDto
+import com.example.submission1.data.response.tvshow.TvOnTheAirDto
 import com.example.submission1.data.services.TvShowService
 import com.example.submission1.data.vo.Result
 import kotlinx.coroutines.CoroutineDispatcher

@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.submission1.abstraction.UseCase
 import com.example.submission1.data.vo.Result
 import com.example.submission1.domain.entity.movie.MovieNowPlaying
-import com.example.submission1.domain.usecase.GetMovieNowPlayingUseCase
+import com.example.submission1.domain.usecase.movie.GetMovieNowPlayingUseCase
 import kotlinx.coroutines.launch
 
 class MoviesViewModel @ViewModelInject constructor(private val getMovieNowPlayingUseCase: GetMovieNowPlayingUseCase) :

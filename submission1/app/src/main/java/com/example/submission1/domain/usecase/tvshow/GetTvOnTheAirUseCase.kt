@@ -1,8 +1,8 @@
-package com.example.submission1.domain.usecase
+package com.example.submission1.domain.usecase.tvshow
 
 import com.example.submission1.abstraction.UseCase
 import com.example.submission1.data.vo.Result
-import com.example.submission1.domain.entity.TvOnTheAir
+import com.example.submission1.domain.entity.tvshow.TvOnTheAir
 import com.example.submission1.domain.repository.TvShowRepository
 import com.example.submission1.util.IMAGE_BASE_URL_POSTER
 import javax.inject.Inject

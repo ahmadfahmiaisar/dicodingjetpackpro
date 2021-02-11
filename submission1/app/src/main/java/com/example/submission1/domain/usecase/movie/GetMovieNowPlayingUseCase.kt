@@ -1,4 +1,4 @@
-package com.example.submission1.domain.usecase
+package com.example.submission1.domain.usecase.movie
 
 import com.example.submission1.abstraction.UseCase
 import com.example.submission1.data.vo.Result

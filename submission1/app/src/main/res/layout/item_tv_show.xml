@@ -7,7 +7,7 @@
 
         <variable
             name="tvshow"
-            type="com.example.submission1.domain.entity.TvOnTheAir" />
+            type="com.example.submission1.domain.entity.tvshow.TvOnTheAir" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

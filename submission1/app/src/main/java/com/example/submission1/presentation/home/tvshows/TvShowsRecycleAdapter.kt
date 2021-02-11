@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.submission1.databinding.ItemTvShowBinding
-import com.example.submission1.domain.entity.TvOnTheAir
+import com.example.submission1.domain.entity.tvshow.TvOnTheAir
 
 class TvShowsRecycleAdapter(private var tvshows: List<TvOnTheAir>) :
     RecyclerView.Adapter<TvShowsRecycleAdapter.ViewHolder>() {

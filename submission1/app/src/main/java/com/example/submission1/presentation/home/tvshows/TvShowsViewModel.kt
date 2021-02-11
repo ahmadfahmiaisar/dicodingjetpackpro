@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.submission1.abstraction.UseCase
 import com.example.submission1.data.vo.Result
-import com.example.submission1.domain.entity.TvOnTheAir
-import com.example.submission1.domain.usecase.GetTvOnTheAirUseCase
+import com.example.submission1.domain.entity.tvshow.TvOnTheAir
+import com.example.submission1.domain.usecase.tvshow.GetTvOnTheAirUseCase
 import kotlinx.coroutines.launch
 
 class TvShowsViewModel @ViewModelInject constructor(private val getTvOnTheAirUseCase: GetTvOnTheAirUseCase) :

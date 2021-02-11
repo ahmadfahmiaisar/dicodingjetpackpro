@@ -1,4 +1,4 @@
-package com.example.submission1.domain.entity
+package com.example.submission1.domain.entity.tvshow
 
 data class TvOnTheAir(
     val id: Int,
