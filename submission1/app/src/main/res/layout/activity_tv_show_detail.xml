@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.home.tvshows.detail.TvShowDetailActivity">
 
-    <data>
-
-        <variable
-            name="tvDetail"
-            type="com.example.submission.domain.entity.tvshow.TvShowDetailUiModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -40,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@{tvDetail.name}"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/iv_movie_detail"
@@ -52,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{tvDetail.popularity}"
             app:layout_constraintStart_toStartOf="@+id/tvTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="popularity" />
@@ -62,7 +53,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{tvDetail.lastAirDate}"
             app:layout_constraintStart_toStartOf="@+id/tvPopularity"
             app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
             tools:text="release date" />
@@ -72,7 +62,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{tvDetail.voteAverage}"
             app:layout_constraintStart_toStartOf="@+id/tvDate"
             app:layout_constraintTop_toBottomOf="@+id/tvDate"
             tools:text="vote average" />
@@ -82,7 +71,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{tvDetail.voteCount}"
             app:layout_constraintStart_toStartOf="@+id/tvVoteAverage"
             app:layout_constraintTop_toBottomOf="@+id/tvVoteAverage"
             tools:text="vote count" />
@@ -94,7 +82,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="@{tvDetail.overview}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_movie_detail"

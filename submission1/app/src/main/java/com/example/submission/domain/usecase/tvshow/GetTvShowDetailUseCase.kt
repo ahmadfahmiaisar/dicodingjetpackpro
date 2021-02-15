@@ -9,12 +9,12 @@ import com.example.submission.util.IMAGE_BASE_URL_POSTER
 import javax.inject.Inject
 
 class GetTvShowDetailUseCase @Inject constructor(private val repository: TvShowRepository) :
-    UseCase<Int, Result<TvShowDetailUiModel>>() {
-    override suspend fun invoke(params: Int): Result<TvShowDetailUiModel> {
+    UseCase<Int, Result<TvShowDetail>>() {
+    override suspend fun invoke(params: Int): Result<TvShowDetail> {
         return handleData(repository.getTvShowDetail(params))
     }
 
-    private fun handleData(result: Result<TvShowDetail>): Result<TvShowDetailUiModel> {
+    private fun handleData(result: Result<TvShowDetail>): Result<TvShowDetail> {
         return when (result) {
             is Result.Success -> Result.Success(result.data.toUiModel())
             is Result.Error -> Result.Error(result.cause, result.code, result.errorMessage)
@@ -22,16 +22,16 @@ class GetTvShowDetailUseCase @Inject constructor(private val repository: TvShowR
         }
     }
 
-    private fun TvShowDetail.toUiModel(): TvShowDetailUiModel {
-        return TvShowDetailUiModel(
+    private fun TvShowDetail.toUiModel(): TvShowDetail {
+        return TvShowDetail(
             this.id,
             this.name,
             "overview:\n${this.overview}",
-            "popularity: ${this.popularity}",
+            this.popularity,
             "${IMAGE_BASE_URL_POSTER}${this.posterPath}",
             "last air date: ${this.lastAirDate}",
-            "vote average: ${this.voteAverage}",
-            "vote count: ${this.voteCount}"
+            this.voteAverage,
+            this.voteCount
         )
     }
 }

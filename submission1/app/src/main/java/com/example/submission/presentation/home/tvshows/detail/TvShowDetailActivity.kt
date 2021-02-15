@@ -1,5 +1,6 @@
 package com.example.submission.presentation.home.tvshows.detail
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +10,7 @@ import com.example.submission.abstraction.BaseActivity
 import com.example.submission.abstraction.HasToolbar
 import com.example.submission.data.vo.Result
 import com.example.submission.databinding.ActivityTvShowDetailBinding
+import com.example.submission.domain.entity.tvshow.TvShowDetail
 import com.example.submission.util.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,14 +53,24 @@ class TvShowDetailActivity : BaseActivity<ActivityTvShowDetailBinding, TvShowDet
                 }
                 is Result.Success -> {
                     binding.shimmerView.stop()
-                    binding.ivMovieDetail.loadUrl(it.data.posterPath)
-                    binding.tvDetail = it.data
+                    displayDetailTv(it.data)
                 }
                 is Result.Error -> {
                     binding.shimmerView.stop()
                 }
             }
         })
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun displayDetailTv(data: TvShowDetail) {
+        binding.ivMovieDetail.loadUrl(data.posterPath)
+        binding.tvTitle.text = data.name
+        binding.tvPopularity.text = "popularity: ${data.popularity}"
+        binding.tvDate.text = data.lastAirDate
+        binding.tvVoteAverage.text = "vote average: ${data.voteAverage}"
+        binding.tvVoteCount.text = "vote count: ${data.voteCount}"
+        binding.tvOverview.text = data.overview
     }
 
     override fun setupToolbar() {
