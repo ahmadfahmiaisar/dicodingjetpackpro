@@ -1,13 +1,10 @@
 package com.example.submission.presentation.home.movies
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieDetail
-import com.example.submission.domain.entity.movie.MovieDetailUiModel
 import com.example.submission.domain.repository.MovieRepository
 import com.example.submission.domain.usecase.movie.GetMovieDetailUseCase
-import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
 import com.example.submission.presentation.home.movies.detail.MovieDetailViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
@@ -19,7 +16,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.never
 import timber.log.Timber
 
 @ExperimentalCoroutinesApi
@@ -49,10 +45,10 @@ class MovieDetailViewModelTest {
     @Test
     fun getMovieDetail() {
         coroutinesTestRule.dispatcher.runBlockingTest {
-            val dummyList = MovieDetail(1, "desc", 0f, "", "date", "title", 0f, 0)
+            val dummy = MovieDetail(1, "desc", 0f, "", "date", "title", 0f, 0)
 
-            val listDetailMovieSucces = Result.Success(dummyList)
-            Mockito.`when`(getMovieDetailUseCase.invoke(1)).thenReturn(listDetailMovieSucces)
+            val detailMovieSucces = Result.Success(dummy)
+            Mockito.`when`(getMovieDetailUseCase.invoke(1)).thenReturn(detailMovieSucces)
 
             viewModel.getMovieDetail(1)
             viewModel.movieDetail.observerTest {
@@ -63,7 +59,7 @@ class MovieDetailViewModelTest {
                     }
                     is Result.Success -> {
                         assertNotNull(it.data)
-                        assertEquals(dummyList.id, it.data.id)
+                        assertEquals(dummy.id, it.data.id)
                     }
                     is Result.Error -> {
                         Timber.tag("ISINYA")
