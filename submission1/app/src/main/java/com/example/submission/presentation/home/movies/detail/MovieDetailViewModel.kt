@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.submission.data.vo.Result
+import com.example.submission.domain.entity.movie.MovieDetail
 import com.example.submission.domain.entity.movie.MovieDetailUiModel
 import com.example.submission.domain.usecase.movie.GetMovieDetailUseCase
 import kotlinx.coroutines.launch
@@ -13,8 +14,8 @@ import kotlinx.coroutines.launch
 class MovieDetailViewModel @ViewModelInject constructor(private val getMovieDetailUseCase: GetMovieDetailUseCase) :
     ViewModel() {
 
-    private val _movieDetail = MutableLiveData<Result<MovieDetailUiModel>>()
-    val movieDetail: LiveData<Result<MovieDetailUiModel>>
+    private val _movieDetail = MutableLiveData<Result<MovieDetail>>()
+    val movieDetail: LiveData<Result<MovieDetail>>
         get() = _movieDetail
 
     fun getMovieDetail(idMovie: Int) {

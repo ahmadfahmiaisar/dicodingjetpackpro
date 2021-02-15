@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.submission.R
 import com.example.submission.databinding.ActivityHomeBinding
 import com.example.submission.presentation.home.movies.MoviesFragment
-import com.example.submission.presentation.home.tvshows.TvShowFragment
+import com.example.submission.presentation.home.tvshows.TvShowsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
         adapter.addFragment(MoviesFragment(), "MOVIES")
-        adapter.addFragment(TvShowFragment(), "TV SHOWS")
+        adapter.addFragment(TvShowsFragment(), "TV SHOWS")
         binding.viewPager.adapter = adapter
     }
 

@@ -1,5 +1,6 @@
 package com.example.submission.presentation.home.movies.detail
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,7 @@ import com.example.submission.abstraction.BaseActivity
 import com.example.submission.abstraction.HasToolbar
 import com.example.submission.data.vo.Result
 import com.example.submission.databinding.ActivityMovieDetailBinding
+import com.example.submission.domain.entity.movie.MovieDetail
 import com.example.submission.util.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,14 +53,24 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding, MovieDetail
                 }
                 is Result.Success -> {
                     binding.shimmerView.stop()
-                    binding.ivMovieDetail.loadUrl(it.data.posterPath)
-                    binding.movieDetail = it.data
+                    displayDetailMovie(it.data)
                 }
                 is Result.Error -> {
                     binding.shimmerView.stop()
                 }
             }
         })
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun displayDetailMovie(data: MovieDetail) {
+        binding.ivMovieDetail.loadUrl(data.posterPath)
+        binding.tvTitle.text = data.title
+        binding.tvPopularity.text = "popularity: ${data.popularity}"
+        binding.tvDate.text = "date: ${data.releaseDate}"
+        binding.tvVoteAverage.text = "vote average: ${data.voteAverage}"
+        binding.tvVoteCount.text = "vote count: ${data.voteCount}"
+        binding.tvOverview.text = "overview: ${data.overview}"
     }
 
     override fun setupToolbar() {

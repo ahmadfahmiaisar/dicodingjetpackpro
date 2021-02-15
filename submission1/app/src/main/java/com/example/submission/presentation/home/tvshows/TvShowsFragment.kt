@@ -13,7 +13,7 @@ import com.example.submission.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TvShowFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>() {
+class TvShowsFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>() {
     override fun getLayoutResourceId(): Int = R.layout.fragment_tv_shows
     override fun getViewModelClass(): Class<TvShowsViewModel> = TvShowsViewModel::class.java
 
