@@ -32,16 +32,16 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
             when (it) {
                 is Result.Loading -> {
                     binding.shimmerView.start(9, R.layout.placeholder_item_movie)
-                    binding.recyclerView.gone()
+                    binding.rvMovie.gone()
                 }
                 is Result.Success -> {
-                    binding.recyclerView.visible()
+                    binding.rvMovie.visible()
                     binding.shimmerView.stop()
                     adapter.refreshMovieNowPlaying(it.data)
                 }
                 is Result.Error -> {
                     binding.shimmerView.stop()
-                    binding.recyclerView.gone()
+                    binding.rvMovie.gone()
                 }
                 else -> {
                 }
@@ -51,8 +51,8 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
 
     private fun setupRecycleView() {
         val layoutManager = LinearLayoutManager(requireActivity())
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = adapter
+        binding.rvMovie.layoutManager = layoutManager
+        binding.rvMovie.adapter = adapter
 
         adapter.setOnMoviePressed {
             MovieDetailActivity.start(requireActivity(), it.id)
