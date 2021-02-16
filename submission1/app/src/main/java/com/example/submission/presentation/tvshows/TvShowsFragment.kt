@@ -32,16 +32,16 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>()
             when (it) {
                 is Result.Loading -> {
                     binding.shimmerView.start(9, R.layout.placeholder_item_movie)
-                    binding.recyclerView.gone()
+                    binding.rvTvShow.gone()
                 }
                 is Result.Success -> {
-                    binding.recyclerView.visible()
+                    binding.rvTvShow.visible()
                     binding.shimmerView.stop()
                     adapter.refreshTvShows(it.data)
                 }
                 is Result.Error -> {
                     binding.shimmerView.stop()
-                    binding.recyclerView.gone()
+                    binding.rvTvShow.gone()
                 }
                 else -> {
                 }
@@ -51,8 +51,8 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>()
 
     private fun setupRecycleView() {
         val layoutManager = LinearLayoutManager(requireActivity())
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = adapter
+        binding.rvTvShow.layoutManager = layoutManager
+        binding.rvTvShow.adapter = adapter
 
         adapter.setOnTvShowPressed {
             TvShowDetailActivity.start(requireActivity(), it.id)
