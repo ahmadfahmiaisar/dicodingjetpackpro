@@ -5,7 +5,7 @@ import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieDetail
 import com.example.submission.domain.repository.MovieRepository
 import com.example.submission.domain.usecase.movie.GetMovieDetailUseCase
-import com.example.submission.presentation.home.movies.detail.MovieDetailViewModel
+import com.example.submission.presentation.movies.detail.MovieDetailViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

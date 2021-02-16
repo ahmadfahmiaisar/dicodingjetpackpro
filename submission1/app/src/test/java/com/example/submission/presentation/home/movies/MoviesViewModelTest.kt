@@ -6,6 +6,7 @@ import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.domain.repository.MovieRepository
 import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
+import com.example.submission.presentation.movies.MoviesViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
 import junit.framework.Assert.assertEquals

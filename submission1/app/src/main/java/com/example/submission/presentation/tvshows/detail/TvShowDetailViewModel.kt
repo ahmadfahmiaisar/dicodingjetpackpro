@@ -1,4 +1,4 @@
-package com.example.submission.presentation.home.tvshows.detail
+package com.example.submission.presentation.tvshows.detail
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData

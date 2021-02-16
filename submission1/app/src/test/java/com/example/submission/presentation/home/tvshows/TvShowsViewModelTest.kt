@@ -7,6 +7,7 @@ import com.example.submission.domain.entity.tvshow.TvOnTheAir
 import com.example.submission.domain.repository.MovieRepository
 import com.example.submission.domain.repository.TvShowRepository
 import com.example.submission.domain.usecase.tvshow.GetTvOnTheAirUseCase
+import com.example.submission.presentation.tvshows.TvShowsViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

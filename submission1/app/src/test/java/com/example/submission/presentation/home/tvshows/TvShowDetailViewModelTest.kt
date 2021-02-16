@@ -5,7 +5,7 @@ import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvShowDetail
 import com.example.submission.domain.repository.TvShowRepository
 import com.example.submission.domain.usecase.tvshow.GetTvShowDetailUseCase
-import com.example.submission.presentation.home.tvshows.detail.TvShowDetailViewModel
+import com.example.submission.presentation.tvshows.detail.TvShowDetailViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
 import dalvik.annotation.TestTarget

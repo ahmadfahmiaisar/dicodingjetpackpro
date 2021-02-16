@@ -1,4 +1,4 @@
-package com.example.submission.presentation.home
+package com.example.submission.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.submission.R
 import com.example.submission.databinding.ActivityHomeBinding
-import com.example.submission.presentation.home.movies.MoviesFragment
-import com.example.submission.presentation.home.tvshows.TvShowsFragment
+import com.example.submission.presentation.movies.MoviesFragment
+import com.example.submission.presentation.tvshows.TvShowsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

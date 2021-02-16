@@ -1,4 +1,4 @@
-package com.example.submission.presentation.home.tvshows
+package com.example.submission.presentation.tvshows
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,7 @@ import com.example.submission.R
 import com.example.submission.abstraction.BaseFragment
 import com.example.submission.data.vo.Result
 import com.example.submission.databinding.FragmentTvShowsBinding
-import com.example.submission.presentation.home.tvshows.detail.TvShowDetailActivity
+import com.example.submission.presentation.tvshows.detail.TvShowDetailActivity
 import com.example.submission.util.gone
 import com.example.submission.util.visible
 import dagger.hilt.android.AndroidEntryPoint

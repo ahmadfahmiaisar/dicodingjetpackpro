@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Submission">
         <activity
-            android:name="com.example.submission.presentation.home.HomeActivity"
+            android:name="com.example.submission.presentation.HomeActivity"
             android:label="Selamat datang gaes"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -23,22 +23,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.submission.presentation.home.movies.detail.MovieDetailActivity"
+            android:name="com.example.submission.presentation.movies.detail.MovieDetailActivity"
             android:label="Detail Movie"
-            android:parentActivityName="com.example.submission.presentation.home.HomeActivity"
+            android:parentActivityName="com.example.submission.presentation.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.submission.presentation.home.HomeActivity" />
+                android:value="com.example.submission.presentation.HomeActivity" />
         </activity>
         <activity
-            android:name="com.example.submission.presentation.home.tvshows.detail.TvShowDetailActivity"
+            android:name="com.example.submission.presentation.tvshows.detail.TvShowDetailActivity"
             android:label="TV Show Detail"
-            android:parentActivityName="com.example.submission.presentation.home.HomeActivity"
+            android:parentActivityName="com.example.submission.presentation.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.submission.presentation.home.HomeActivity" />
+                android:value="com.example.submission.presentation.HomeActivity" />
         </activity>
 
     </application>

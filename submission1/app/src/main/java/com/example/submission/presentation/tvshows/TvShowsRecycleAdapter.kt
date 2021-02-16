@@ -1,4 +1,4 @@
-package com.example.submission.presentation.home.tvshows
+package com.example.submission.presentation.tvshows
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

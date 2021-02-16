@@ -1,4 +1,4 @@
-package com.example.submission.presentation.home.movies
+package com.example.submission.presentation.movies
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,7 @@ import com.example.submission.R
 import com.example.submission.abstraction.BaseFragment
 import com.example.submission.data.vo.Result
 import com.example.submission.databinding.FragmentMoviesBinding
-import com.example.submission.presentation.home.movies.detail.MovieDetailActivity
+import com.example.submission.presentation.movies.detail.MovieDetailActivity
 import com.example.submission.util.gone
 import com.example.submission.util.visible
 import dagger.hilt.android.AndroidEntryPoint
