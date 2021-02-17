@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_movie_detail"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/tvVoteCount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTitle"
+        tools:ignore="ContentDescription"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@{movieDetail.title}"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/iv_movie_detail"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ini nama filmnya" />
+
+    <TextView
+        android:id="@+id/tvPopularity"
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@{movieDetail.popularity}"
+        app:layout_constraintStart_toStartOf="@+id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:text="popularity" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@{movieDetail.releaseDate}"
+        app:layout_constraintStart_toStartOf="@+id/tvPopularity"
+        app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
+        tools:text="release date" />
+
+    <TextView
+        android:id="@+id/tvVoteAverage"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@{movieDetail.voteAverage}"
+        app:layout_constraintStart_toStartOf="@+id/tvDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate"
+        tools:text="vote average" />
+
+    <TextView
+        android:id="@+id/tvVoteCount"
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@{movieDetail.voteCount}"
+        app:layout_constraintStart_toStartOf="@+id/tvVoteAverage"
+        app:layout_constraintTop_toBottomOf="@+id/tvVoteAverage"
+        tools:text="vote count" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@{movieDetail.overview}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_movie_detail"
+        tools:text="overview" />
+</androidx.constraintlayout.widget.ConstraintLayout>
