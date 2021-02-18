@@ -1,6 +1,7 @@
 package com.example.submission.presentation.home.movies
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieNowPlaying
@@ -48,17 +49,9 @@ class MoviesViewModelTest {
     @Test
     fun `get movie now playing`() {
         coroutinesTestRule.dispatcher.runBlockingTest {
-            val dummyListMovie = mutableListOf<MovieNowPlaying>()
-            dummyListMovie.add(
-                MovieNowPlaying(
-                    1,
-                    "desc",
-                    "",
-                    "movie"
-                )
-            )
-            val listMovie = Result.Success(dummyListMovie)
-            Mockito.`when`(getMovieNowPlayingUseCase.invoke(UseCase.None)).thenReturn(listMovie)
+            val movies = MutableLiveData<Result<List<MovieNowPlaying>>>()
+            movies.value = dummyMovies()
+            Mockito.`when`(getMovieNowPlayingUseCase.invoke(UseCase.None)).thenReturn(movies.value)
 
             viewModel.getMovie()
             viewModel.movie.observerTest {
@@ -72,5 +65,18 @@ class MoviesViewModelTest {
 
         }
 
+    }
+
+    private fun dummyMovies(): Result<List<MovieNowPlaying>> {
+        val dummyListMovie = mutableListOf<MovieNowPlaying>()
+        dummyListMovie.add(
+            MovieNowPlaying(
+                1,
+                "desc",
+                "",
+                "movie"
+            )
+        )
+        return Result.Success(dummyListMovie)
     }
 }
