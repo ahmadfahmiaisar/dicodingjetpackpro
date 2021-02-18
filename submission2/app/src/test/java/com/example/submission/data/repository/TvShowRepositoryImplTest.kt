@@ -3,6 +3,7 @@ package com.example.submission.data.repository
 import com.example.submission.data.mapper.tvshow.TvOnTheAirMapper
 import com.example.submission.data.mapper.tvshow.TvShowDetailMapper
 import com.example.submission.data.response.tvshow.TvOnTheAirDto
+import com.example.submission.data.response.tvshow.TvShowDetailDto
 import com.example.submission.data.source.TvShowRemoteDataSource
 import com.example.submission.data.vo.Result
 import com.example.submission.utils.CoroutinesTestRule
@@ -52,8 +53,27 @@ class TvShowRepositoryImplTest {
         }
     }
 
+    @Test
+    fun getDetailTvShow() {
+        coroutinesTestRule.runBlockingTest {
+            val tvId = 1
+            val response = Result.Success(fakeDetailTvResponse())
+            Mockito.`when`(remoteDataSource.getTvShowDetail(coroutinesTestRule.dispatcher, tvId))
+                .thenReturn(response)
+
+            tvShowRepositoryImpl.getTvShowDetail(tvId)
+            Mockito.verify(remoteDataSource).getTvShowDetail(coroutinesTestRule.dispatcher, tvId)
+            Assert.assertNotNull(tvShowRepositoryImpl.getTvShowDetail(tvId))
+            Assert.assertEquals(1, response.data.id)
+        }
+    }
+
     private fun fakeTvShowResponse(): TvOnTheAirDto {
         val result = TvOnTheAirDto.Result(0, "", "", "")
         return TvOnTheAirDto(mutableListOf(result))
+    }
+
+    private fun fakeDetailTvResponse(): TvShowDetailDto {
+        return TvShowDetailDto(1, "", "", 0.0, "", "", 0.0, 0)
     }
 }
