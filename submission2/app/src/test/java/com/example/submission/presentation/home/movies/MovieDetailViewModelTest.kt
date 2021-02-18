@@ -1,6 +1,7 @@
 package com.example.submission.presentation.home.movies
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieDetail
 import com.example.submission.domain.repository.MovieRepository
@@ -45,31 +46,27 @@ class MovieDetailViewModelTest {
     @Test
     fun getMovieDetail() {
         coroutinesTestRule.dispatcher.runBlockingTest {
-            val dummy = MovieDetail(1, "desc", 0f, "", "date", "title", 0f, 0)
+            val movieId = 1
+            val detailMovie = MutableLiveData<Result<MovieDetail>>()
+            detailMovie.value = dummyDetailMovie()
 
-            val detailMovieSucces = Result.Success(dummy)
-            Mockito.`when`(getMovieDetailUseCase.invoke(1)).thenReturn(detailMovieSucces)
+            Mockito.`when`(getMovieDetailUseCase.invoke(movieId)).thenReturn(detailMovie.value)
 
-            viewModel.getMovieDetail(1)
+            viewModel.getMovieDetail(movieId)
             viewModel.movieDetail.observerTest {
 
                 when (it) {
-                    is Result.Loading -> {
-                        Timber.tag("ISINYA")
-                    }
                     is Result.Success -> {
                         assertNotNull(it.data)
-                        assertEquals(dummy.id, it.data.id)
-                    }
-                    is Result.Error -> {
-                        Timber.tag("ISINYA")
-                    }
-                    else -> {
-                        Timber.tag("ISINYA").d("$it")
+                        assertEquals(movieId, it.data.id)
                     }
                 }
 
             }
         }
+    }
+
+    private fun dummyDetailMovie(): Result<MovieDetail> {
+        return Result.Success(MovieDetail(1, "desc", 0f, "", "date", "title", 0f, 0))
     }
 }
