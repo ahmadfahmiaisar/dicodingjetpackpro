@@ -1,6 +1,7 @@
 package com.example.submission.presentation.home.tvshows
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvOnTheAir
@@ -47,11 +48,9 @@ class TvShowsViewModelTest {
     @Test
     fun getTvShows() {
         coroutinesTestRule.dispatcher.runBlockingTest {
-            val dummyList = mutableListOf<TvOnTheAir>()
-            dummyList.add(TvOnTheAir(1, "tv", "desc", ""))
-
-            val listTvSucces = Result.Success(dummyList)
-            Mockito.`when`(getTvOnTheAirUseCase.invoke(UseCase.None)).thenReturn(listTvSucces)
+            val tvShow = MutableLiveData<Result<List<TvOnTheAir>>>()
+            tvShow.value = dummyTvShow()
+            Mockito.`when`(getTvOnTheAirUseCase.invoke(UseCase.None)).thenReturn(tvShow.value)
 
             viewModel.getTvShows()
             viewModel.tvShows.observerTest {
@@ -63,5 +62,11 @@ class TvShowsViewModelTest {
                 }
             }
         }
+    }
+
+    private fun dummyTvShow(): Result<List<TvOnTheAir>> {
+        val dummyTv = mutableListOf<TvOnTheAir>()
+        dummyTv.add(TvOnTheAir(1, "tv", "desc", ""))
+        return Result.Success(dummyTv)
     }
 }
