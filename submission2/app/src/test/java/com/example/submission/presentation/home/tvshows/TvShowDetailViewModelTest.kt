@@ -1,6 +1,7 @@
 package com.example.submission.presentation.home.tvshows
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvShowDetail
 import com.example.submission.domain.repository.TvShowRepository
@@ -45,20 +46,26 @@ class TvShowDetailViewModelTest {
     @Test
     fun getTvShowDetail() {
         coroutinesTestRule.dispatcher.runBlockingTest {
-            val dummy = TvShowDetail(0, "title", "desc", 0.0, "", "date", 0.0, 0)
-
-            val tvDetailSucces = Result.Success(dummy)
-            Mockito.`when`(getTvShowDetailUseCase.invoke(1)).thenReturn(tvDetailSucces)
+            val tvId = 1
+            val detailTvShow = MutableLiveData<Result<TvShowDetail>>()
+            detailTvShow.value = dummyDetailTv()
+            Mockito.`when`(getTvShowDetailUseCase.invoke(tvId)).thenReturn(detailTvShow.value)
 
             viewModel.getTvShowDetail(1)
             viewModel.tvShowDetail.observerTest {
                 when (it) {
                     is Result.Success -> {
                         assertNotNull(it.data)
-                        assertEquals(dummy.id, it.data.id)
+                        assertEquals(tvId, it.data.id)
                     }
                 }
             }
         }
+    }
+
+    private fun dummyDetailTv(): Result<TvShowDetail> {
+        return Result.Success(
+            TvShowDetail(1, "title", "desc", 0.0, "", "date", 0.0, 0)
+        )
     }
 }
