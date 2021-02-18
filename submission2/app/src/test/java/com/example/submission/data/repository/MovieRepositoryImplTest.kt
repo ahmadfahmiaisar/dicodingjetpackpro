@@ -2,6 +2,7 @@ package com.example.submission.data.repository
 
 import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
+import com.example.submission.data.response.movie.MovieDetailDto
 import com.example.submission.data.response.movie.NowPlayingDto
 import com.example.submission.data.source.MovieRemoteDataSource
 import com.example.submission.data.vo.Result
@@ -57,8 +58,27 @@ class MovieRepositoryImplTest {
         }
     }
 
+    @Test
+    fun getDetailMovie() {
+        coroutinesTestRule.runBlockingTest {
+            val movieId = 1
+            val response = Result.Success(fakeDetailMovieResponse())
+            `when`(remoteDataSource.getMovieDetail(coroutinesTestRule.dispatcher, movieId)).thenReturn(response)
+
+            movieRepositoryImpl.getMovieDetail(movieId)
+
+            verify(remoteDataSource).getMovieDetail(coroutinesTestRule.dispatcher, movieId)
+            Assert.assertNotNull( movieRepositoryImpl.getMovieDetail(movieId))
+            Assert.assertEquals(1, response.data.id)
+        }
+    }
+
     private fun fakeMoviesResponse(): NowPlayingDto {
         val result = NowPlayingDto.Result(0, "", "", "")
         return NowPlayingDto(mutableListOf(result))
+    }
+
+    private fun fakeDetailMovieResponse(): MovieDetailDto {
+        return MovieDetailDto(1, "", 0f, "", "", "", 0f, 0)
     }
 }
