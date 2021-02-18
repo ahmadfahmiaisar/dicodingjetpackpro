@@ -1,5 +1,7 @@
 package com.example.submission.utils
 
+import com.example.submission.data.dispatcher.DispatcherProvider
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -21,5 +23,17 @@ class CoroutinesTestRule(val dispatcher: TestCoroutineDispatcher = TestCoroutine
         super.finished(description)
         Dispatchers.resetMain()
         cleanupTestCoroutines()
+    }
+
+    val testDispatcherProvider = object : DispatcherProvider {
+        override val io: CoroutineDispatcher
+            get() = dispatcher
+        override val ui: CoroutineDispatcher
+            get() = dispatcher
+        override val default: CoroutineDispatcher
+            get() = dispatcher
+        override val unconfined: CoroutineDispatcher
+            get() = dispatcher
+
     }
 }
