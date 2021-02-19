@@ -7,7 +7,6 @@ import com.example.submission.R
 import com.example.submission.abstraction.BaseFragment
 import com.example.submission.data.vo.Result
 import com.example.submission.databinding.FragmentMoviesBinding
-import com.example.submission.helper.EspressoIdlingResourceWrapper
 import com.example.submission.presentation.movies.detail.MovieDetailActivity
 import com.example.submission.util.gone
 import com.example.submission.util.visible
@@ -32,12 +31,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         vm.movie.observe(viewLifecycleOwner, {
             when (it) {
                 is Result.Loading -> {
-                    EspressoIdlingResourceWrapper.increment()
                     binding.shimmerView.start(9, R.layout.placeholder_item_movie)
                     binding.rvMovie.gone()
                 }
                 is Result.Success -> {
-                    EspressoIdlingResourceWrapper.decrement()
                     binding.rvMovie.visible()
                     binding.shimmerView.stop()
                     adapter.refreshMovieNowPlaying(it.data)

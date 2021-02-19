@@ -9,6 +9,7 @@ import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
+import com.example.submission.helper.EspressoIdlingResourceWrapper
 import kotlinx.coroutines.launch
 
 class MoviesViewModel @ViewModelInject constructor(private val getMovieNowPlayingUseCase: GetMovieNowPlayingUseCase) :
@@ -19,9 +20,11 @@ class MoviesViewModel @ViewModelInject constructor(private val getMovieNowPlayin
         get() = _movie
 
     fun getMovie() {
+        EspressoIdlingResourceWrapper.increment()
         _movie.value = Result.Loading
         viewModelScope.launch {
             _movie.value = getMovieNowPlayingUseCase(UseCase.None)
+            EspressoIdlingResourceWrapper.decrement()
         }
     }
 }
