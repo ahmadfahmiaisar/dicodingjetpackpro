@@ -4,21 +4,22 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvShowDetail
-import com.example.submission.domain.repository.TvShowRepository
 import com.example.submission.domain.usecase.tvshow.GetTvShowDetailUseCase
 import com.example.submission.presentation.tvshows.detail.TvShowDetailViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
-import dalvik.annotation.TestTarget
+import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
 
 @ExperimentalCoroutinesApi
 class TvShowDetailViewModelTest {
@@ -30,16 +31,12 @@ class TvShowDetailViewModelTest {
     val coroutinesTestRule = CoroutinesTestRule()
 
     @Mock
-    private val repository = Mockito.mock(TvShowRepository::class.java)
-
-    @Mock
-    private lateinit var getTvShowDetailUseCase: GetTvShowDetailUseCase
+    private val getTvShowDetailUseCase = mock(GetTvShowDetailUseCase::class.java)
 
     private lateinit var viewModel: TvShowDetailViewModel
 
     @Before
     fun setup() {
-        getTvShowDetailUseCase = GetTvShowDetailUseCase(repository)
         viewModel = TvShowDetailViewModel(getTvShowDetailUseCase)
     }
 
@@ -50,7 +47,7 @@ class TvShowDetailViewModelTest {
             val detailTvShow = MutableLiveData<Result<TvShowDetail>>()
             detailTvShow.value = dummyDetailTv()
             Mockito.`when`(getTvShowDetailUseCase.invoke(tvId)).thenReturn(detailTvShow.value)
-
+            verify(getTvShowDetailUseCase, never()).invoke(tvId)
             viewModel.getTvShowDetail(1)
             viewModel.tvShowDetail.observerTest {
                 when (it) {
