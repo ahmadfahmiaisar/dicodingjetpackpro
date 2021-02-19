@@ -4,20 +4,22 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieDetail
-import com.example.submission.domain.repository.MovieRepository
 import com.example.submission.domain.usecase.movie.GetMovieDetailUseCase
 import com.example.submission.presentation.movies.detail.MovieDetailViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
+import com.nhaarman.mockitokotlin2.never
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import timber.log.Timber
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
 @ExperimentalCoroutinesApi
 class MovieDetailViewModelTest {
@@ -30,16 +32,12 @@ class MovieDetailViewModelTest {
     val coroutinesTestRule = CoroutinesTestRule()
 
     @Mock
-    private val repository = Mockito.mock(MovieRepository::class.java)
-
-    @Mock
-    private lateinit var getMovieDetailUseCase: GetMovieDetailUseCase
+    private val getMovieDetailUseCase = mock(GetMovieDetailUseCase::class.java)
 
     private lateinit var viewModel: MovieDetailViewModel
 
     @Before
     fun setup() {
-        getMovieDetailUseCase = GetMovieDetailUseCase(repository)
         viewModel = MovieDetailViewModel(getMovieDetailUseCase)
     }
 
@@ -51,17 +49,16 @@ class MovieDetailViewModelTest {
             detailMovie.value = dummyDetailMovie()
 
             Mockito.`when`(getMovieDetailUseCase.invoke(movieId)).thenReturn(detailMovie.value)
+            verify(getMovieDetailUseCase, never()).invoke(movieId)
 
             viewModel.getMovieDetail(movieId)
             viewModel.movieDetail.observerTest {
-
                 when (it) {
                     is Result.Success -> {
                         assertNotNull(it.data)
                         assertEquals(movieId, it.data.id)
                     }
                 }
-
             }
         }
     }
