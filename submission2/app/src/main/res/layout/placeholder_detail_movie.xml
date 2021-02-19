@@ -1,84 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <ImageView
+    <View
         android:id="@+id/iv_movie_detail"
         android:layout_width="100dp"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:layout_marginStart="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/tvVoteCount"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shimmer_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvTitle"
-        tools:ignore="ContentDescription"
-        tools:src="@mipmap/ic_launcher" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <View
         android:id="@+id/tvTitle"
         android:layout_width="120dp"
         android:layout_height="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@{movieDetail.title}"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:background="@drawable/shimmer_background"
         app:layout_constraintStart_toEndOf="@+id/iv_movie_detail"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="ini nama filmnya" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <View
         android:id="@+id/tvPopularity"
         android:layout_width="90dp"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
-        android:text="@{movieDetail.popularity}"
+        android:background="@drawable/shimmer_background"
         app:layout_constraintStart_toStartOf="@+id/tvTitle"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        tools:text="popularity" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-    <TextView
+    <View
         android:id="@+id/tvDate"
         android:layout_width="90dp"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
-        android:text="@{movieDetail.releaseDate}"
+        android:background="@drawable/shimmer_background"
         app:layout_constraintStart_toStartOf="@+id/tvPopularity"
-        app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
-        tools:text="release date" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPopularity" />
 
-    <TextView
+    <View
         android:id="@+id/tvVoteAverage"
         android:layout_width="100dp"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
-        android:text="@{movieDetail.voteAverage}"
+        android:background="@drawable/shimmer_background"
         app:layout_constraintStart_toStartOf="@+id/tvDate"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate"
-        tools:text="vote average" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
-    <TextView
+    <View
         android:id="@+id/tvVoteCount"
         android:layout_width="90dp"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
-        android:text="@{movieDetail.voteCount}"
+        android:background="@drawable/shimmer_background"
         app:layout_constraintStart_toStartOf="@+id/tvVoteAverage"
-        app:layout_constraintTop_toBottomOf="@+id/tvVoteAverage"
-        tools:text="vote count" />
+        app:layout_constraintTop_toBottomOf="@+id/tvVoteAverage" />
 
-    <TextView
+    <View
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="@{movieDetail.overview}"
+        android:background="@drawable/shimmer_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_movie_detail"
-        tools:text="overview" />
+        app:layout_constraintTop_toBottomOf="@id/tvVoteCount" />
 </androidx.constraintlayout.widget.ConstraintLayout>
