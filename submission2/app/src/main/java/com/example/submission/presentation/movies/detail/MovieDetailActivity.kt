@@ -22,7 +22,7 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding, MovieDetail
     override fun getViewModelClass(): Class<MovieDetailViewModel> = MovieDetailViewModel::class.java
 
     companion object {
-        private const val INTENT_KEY_MOVIE_ID = "movieid"
+        const val INTENT_KEY_MOVIE_ID = "movieid"
 
         @JvmStatic
         fun start(context: Context, movieId: Int) {
@@ -65,7 +65,7 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding, MovieDetail
     @SuppressLint("SetTextI18n")
     private fun displayDetailMovie(data: MovieDetail) {
         binding.ivMovieDetail.loadUrl(data.posterPath)
-        binding.tvTitle.text = data.title
+        binding.tvTitleMovie.text = data.title
         binding.tvPopularity.text = "popularity: ${data.popularity}"
         binding.tvDate.text = data.releaseDate
         binding.tvVoteAverage.text = "vote average: ${data.voteAverage}"

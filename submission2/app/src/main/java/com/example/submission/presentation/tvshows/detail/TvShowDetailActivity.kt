@@ -22,7 +22,7 @@ class TvShowDetailActivity : BaseActivity<ActivityTvShowDetailBinding, TvShowDet
         TvShowDetailViewModel::class.java
 
     companion object {
-        private const val INTENT_KEY_TV_ID = "tvid"
+        const val INTENT_KEY_TV_ID = "tvid"
 
         @JvmStatic
         fun start(context: Context, tvId: Int) {
@@ -65,7 +65,7 @@ class TvShowDetailActivity : BaseActivity<ActivityTvShowDetailBinding, TvShowDet
     @SuppressLint("SetTextI18n")
     private fun displayDetailTv(data: TvShowDetail) {
         binding.ivMovieDetail.loadUrl(data.posterPath)
-        binding.tvTitle.text = data.name
+        binding.tvTitleTv.text = data.name
         binding.tvPopularity.text = "popularity: ${data.popularity}"
         binding.tvDate.text = data.lastAirDate
         binding.tvVoteAverage.text = "vote average: ${data.voteAverage}"
