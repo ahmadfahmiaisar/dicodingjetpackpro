@@ -5,11 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieNowPlaying
-import com.example.submission.domain.repository.MovieRepository
 import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
 import com.example.submission.presentation.movies.MoviesViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,18 +32,13 @@ class MoviesViewModelTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
-
     @Mock
-    private val movieRepository = mock(MovieRepository::class.java)
-
-    @Mock
-    private lateinit var getMovieNowPlayingUseCase: GetMovieNowPlayingUseCase
+    private var getMovieNowPlayingUseCase = mock(GetMovieNowPlayingUseCase::class.java)
 
     private lateinit var viewModel: MoviesViewModel
 
     @Before
     fun setup() {
-        getMovieNowPlayingUseCase = GetMovieNowPlayingUseCase(movieRepository)
         viewModel = MoviesViewModel(getMovieNowPlayingUseCase)
     }
 
@@ -52,6 +48,7 @@ class MoviesViewModelTest {
             val movies = MutableLiveData<Result<List<MovieNowPlaying>>>()
             movies.value = dummyMovies()
             Mockito.`when`(getMovieNowPlayingUseCase.invoke(UseCase.None)).thenReturn(movies.value)
+            verify(getMovieNowPlayingUseCase, never()).invoke(UseCase.None)
 
             viewModel.getMovie()
             viewModel.movie.observerTest {
@@ -62,7 +59,6 @@ class MoviesViewModelTest {
                     }
                 }
             }
-
         }
 
     }
