@@ -57,5 +57,10 @@ class MoviesFragmentTest {
         val intent = Intent().putExtra(MovieDetailActivity.INTENT_KEY_MOVIE_ID, 464052)
         activityRuleDetailMovie.launchActivity(intent)
         onView(withId(R.id.tvTitleMovie)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvMoviePopularity)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvMovieReleaseDate)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvMovieVoteAverage)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvMovieVoteCount)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvMovieOverview)).check(matches(isDisplayed()))
     }
 }

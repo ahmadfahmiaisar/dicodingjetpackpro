@@ -62,5 +62,10 @@ class TvShowsFragmentTest {
         )
         activityRuleDetailTv.launchActivity(intent)
         onView(withId(R.id.tvTitleTv)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvPopularityTvShow)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvDateTvShow)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvVoteAverageTvShow)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvVoteCountTvShow)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvOverViewTvShow)).check(matches(isDisplayed()))
     }
 }

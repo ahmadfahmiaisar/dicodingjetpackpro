@@ -66,11 +66,11 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding, MovieDetail
     private fun displayDetailMovie(data: MovieDetail) {
         binding.ivMovieDetail.loadUrl(data.posterPath)
         binding.tvTitleMovie.text = data.title
-        binding.tvPopularity.text = "popularity: ${data.popularity}"
-        binding.tvDate.text = data.releaseDate
-        binding.tvVoteAverage.text = "vote average: ${data.voteAverage}"
-        binding.tvVoteCount.text = "vote count: ${data.voteCount}"
-        binding.tvOverview.text = data.overview
+        binding.tvMoviePopularity.text = "popularity: ${data.popularity}"
+        binding.tvMovieReleaseDate.text = data.releaseDate
+        binding.tvMovieVoteAverage.text = "vote average: ${data.voteAverage}"
+        binding.tvMovieVoteCount.text = "vote count: ${data.voteCount}"
+        binding.tvMovieOverview.text = data.overview
     }
 
     override fun setupToolbar() {
