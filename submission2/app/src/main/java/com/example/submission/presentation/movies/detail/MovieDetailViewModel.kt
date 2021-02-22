@@ -23,7 +23,6 @@ class MovieDetailViewModel @ViewModelInject constructor(private val getMovieDeta
         EspressoIdlingResourceWrapper.increment()
         _movieDetail.value = Result.Loading
         viewModelScope.launch {
-            delay(100)
             _movieDetail.value = getMovieDetailUseCase(idMovie)
             EspressoIdlingResourceWrapper.decrement()
         }

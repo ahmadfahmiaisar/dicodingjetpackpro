@@ -8,18 +8,15 @@ import com.example.submission.domain.usecase.movie.GetMovieDetailUseCase
 import com.example.submission.presentation.movies.detail.MovieDetailViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
-import com.nhaarman.mockitokotlin2.never
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
 
 @ExperimentalCoroutinesApi
 class MovieDetailViewModelTest {
@@ -42,6 +39,20 @@ class MovieDetailViewModelTest {
     }
 
     @Test
+    fun getMovieDetailTest1() {
+        coroutinesTestRule.dispatcher.runBlockingTest {
+            val movieId = 464052
+
+            val dummy = dummyDetailMovie()
+            Mockito.`when`(getMovieDetailUseCase.invoke(movieId)).thenReturn(dummy)
+            viewModel.getMovieDetail(movieId)
+            Mockito.verify(getMovieDetailUseCase).invoke(movieId)
+
+        }
+    }
+
+
+    @Test
     fun getMovieDetail() {
         coroutinesTestRule.dispatcher.runBlockingTest {
             val movieId = 1
@@ -49,14 +60,14 @@ class MovieDetailViewModelTest {
             detailMovie.value = dummyDetailMovie()
 
             Mockito.`when`(getMovieDetailUseCase.invoke(movieId)).thenReturn(detailMovie.value)
-            verify(getMovieDetailUseCase, never()).invoke(movieId)
-
             viewModel.getMovieDetail(movieId)
+            Mockito.verify(getMovieDetailUseCase).invoke(movieId)
+
             viewModel.movieDetail.observerTest {
                 when (it) {
                     is Result.Success -> {
-                        assertNotNull(it.data)
-                        assertEquals(movieId, it.data.id)
+                        Assert.assertNotNull(it.data)
+                        Assert.assertEquals(movieId, it.data.id)
                     }
                 }
             }
@@ -64,6 +75,8 @@ class MovieDetailViewModelTest {
     }
 
     private fun dummyDetailMovie(): Result<MovieDetail> {
-        return Result.Success(MovieDetail(1, "desc", 0f, "", "date", "title", 0f, 0))
+        return Result.Success(
+            MovieDetail(1, "desc", 0f, "", "date", "title", 0f, 0)
+        )
     }
 }
