@@ -8,8 +8,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.swipeLeft
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import com.example.submission.R
 import com.example.submission.helper.EspressoIdlingResourceWrapper
@@ -62,7 +61,9 @@ class TvShowsFragmentTest {
         )
         activityRuleDetailTv.launchActivity(intent)
         onView(withId(R.id.tvTitleTv)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvTitleTv)).check(matches(withText("WandaVision")))
         onView(withId(R.id.tvPopularityTvShow)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvPopularityTvShow)).check(matches(withText("popularity: 4374.956")))
         onView(withId(R.id.tvDateTvShow)).check(matches(isDisplayed()))
         onView(withId(R.id.tvVoteAverageTvShow)).check(matches(isDisplayed()))
         onView(withId(R.id.tvVoteCountTvShow)).check(matches(isDisplayed()))
