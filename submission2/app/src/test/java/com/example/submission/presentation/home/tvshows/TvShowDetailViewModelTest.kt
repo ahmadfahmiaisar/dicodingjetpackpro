@@ -8,7 +8,6 @@ import com.example.submission.domain.usecase.tvshow.GetTvShowDetailUseCase
 import com.example.submission.presentation.tvshows.detail.TvShowDetailViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
-import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
@@ -19,7 +18,6 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.never
 
 @ExperimentalCoroutinesApi
 class TvShowDetailViewModelTest {
@@ -47,8 +45,8 @@ class TvShowDetailViewModelTest {
             val detailTvShow = MutableLiveData<Result<TvShowDetail>>()
             detailTvShow.value = dummyDetailTv()
             Mockito.`when`(getTvShowDetailUseCase.invoke(tvId)).thenReturn(detailTvShow.value)
-            verify(getTvShowDetailUseCase, never()).invoke(tvId)
             viewModel.getTvShowDetail(1)
+            Mockito.verify(getTvShowDetailUseCase).invoke(tvId)
             viewModel.tvShowDetail.observerTest {
                 when (it) {
                     is Result.Success -> {

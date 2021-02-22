@@ -9,7 +9,6 @@ import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvShowDetail
 import com.example.submission.domain.usecase.tvshow.GetTvShowDetailUseCase
 import com.example.submission.helper.EspressoIdlingResourceWrapper
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class TvShowDetailViewModel @ViewModelInject constructor(private val getTvShowDetailUseCase: GetTvShowDetailUseCase) :
@@ -23,7 +22,6 @@ class TvShowDetailViewModel @ViewModelInject constructor(private val getTvShowDe
         EspressoIdlingResourceWrapper.increment()
         _tvShowDetail.value = Result.Loading
         viewModelScope.launch {
-            delay(100)
             _tvShowDetail.value = getTvShowDetailUseCase(idTv)
             EspressoIdlingResourceWrapper.decrement()
         }
