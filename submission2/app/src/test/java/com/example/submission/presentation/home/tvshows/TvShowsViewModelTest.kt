@@ -9,17 +9,16 @@ import com.example.submission.domain.usecase.tvshow.GetTvOnTheAirUseCase
 import com.example.submission.presentation.tvshows.TvShowsViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
-import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.never
 
 @ExperimentalCoroutinesApi
 class TvShowsViewModelTest {
@@ -47,8 +46,8 @@ class TvShowsViewModelTest {
             val tvShow = MutableLiveData<Result<List<TvOnTheAir>>>()
             tvShow.value = dummyTvShow()
             Mockito.`when`(getTvOnTheAirUseCase.invoke(UseCase.None)).thenReturn(tvShow.value)
-            verify(getTvOnTheAirUseCase, never()).invoke(UseCase.None)
             viewModel.getTvShows()
+            Mockito.verify(getTvOnTheAirUseCase).invoke(UseCase.None)
             viewModel.tvShows.observerTest {
                 when (it) {
                     is Result.Success -> {

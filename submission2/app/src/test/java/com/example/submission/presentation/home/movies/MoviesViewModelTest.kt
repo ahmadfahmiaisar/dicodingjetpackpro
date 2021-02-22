@@ -9,8 +9,6 @@ import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
 import com.example.submission.presentation.movies.MoviesViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.verify
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,6 +19,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
 @ExperimentalCoroutinesApi
 class MoviesViewModelTest {
@@ -48,9 +47,9 @@ class MoviesViewModelTest {
             val movies = MutableLiveData<Result<List<MovieNowPlaying>>>()
             movies.value = dummyMovies()
             Mockito.`when`(getMovieNowPlayingUseCase.invoke(UseCase.None)).thenReturn(movies.value)
-            verify(getMovieNowPlayingUseCase, never()).invoke(UseCase.None)
 
             viewModel.getMovie()
+            verify(getMovieNowPlayingUseCase).invoke(UseCase.None)
             viewModel.movie.observerTest {
                 when (it) {
                     is Result.Success -> {
