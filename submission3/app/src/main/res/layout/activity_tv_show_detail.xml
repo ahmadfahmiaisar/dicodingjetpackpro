@@ -21,14 +21,14 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/tvVoteCount"
+            app:layout_constraintBottom_toBottomOf="@+id/tvVoteCountTvShow"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:layout_constraintTop_toTopOf="@+id/tvTitleTv"
             tools:ignore="ContentDescription"
             tools:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvTitleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -40,58 +40,56 @@
             tools:text="ini nama filmnya" />
 
         <TextView
-            android:id="@+id/tvPopularity"
+            android:id="@+id/tvPopularityTvShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:layout_constraintStart_toStartOf="@+id/tvTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleTv"
             tools:text="popularity" />
 
         <TextView
-            android:id="@+id/tvDate"
+            android:id="@+id/tvDateTvShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvPopularity"
-            app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
+            app:layout_constraintStart_toStartOf="@+id/tvPopularityTvShow"
+            app:layout_constraintTop_toBottomOf="@+id/tvPopularityTvShow"
             tools:text="release date" />
 
         <TextView
-            android:id="@+id/tvVoteAverage"
+            android:id="@+id/tvVoteAverageTvShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvDate"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate"
+            app:layout_constraintStart_toStartOf="@+id/tvDateTvShow"
+            app:layout_constraintTop_toBottomOf="@+id/tvDateTvShow"
             tools:text="vote average" />
 
         <TextView
-            android:id="@+id/tvVoteCount"
+            android:id="@+id/tvVoteCountTvShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvVoteAverage"
-            app:layout_constraintTop_toBottomOf="@+id/tvVoteAverage"
+            app:layout_constraintStart_toStartOf="@+id/tvVoteAverageTvShow"
+            app:layout_constraintTop_toBottomOf="@+id/tvVoteAverageTvShow"
             tools:text="vote count" />
 
         <TextView
-            android:id="@+id/tvOverview"
+            android:id="@+id/tvOverViewTvShow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_movie_detail"
+            app:layout_constraintTop_toBottomOf="@+id/tvVoteCountTvShow"
             tools:text="overview" />
 
         <com.example.submission.view.shimmerview.ShimmerView
             android:id="@+id/shimmerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginEnd="411dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -5,21 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvOnTheAir
-import com.example.submission.domain.repository.MovieRepository
-import com.example.submission.domain.repository.TvShowRepository
 import com.example.submission.domain.usecase.tvshow.GetTvOnTheAirUseCase
 import com.example.submission.presentation.tvshows.TvShowsViewModel
 import com.example.submission.utils.CoroutinesTestRule
 import com.example.submission.utils.observerTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
 
 @ExperimentalCoroutinesApi
 class TvShowsViewModelTest {
@@ -31,17 +30,13 @@ class TvShowsViewModelTest {
     val coroutinesTestRule = CoroutinesTestRule()
 
     @Mock
-    private val repository = Mockito.mock(TvShowRepository::class.java)
-
-    @Mock
-    private lateinit var getTvOnTheAirUseCase: GetTvOnTheAirUseCase
+    private val getTvOnTheAirUseCase = mock(GetTvOnTheAirUseCase::class.java)
 
     private lateinit var viewModel: TvShowsViewModel
 
 
     @Before
     fun setup() {
-        getTvOnTheAirUseCase = GetTvOnTheAirUseCase(repository)
         viewModel = TvShowsViewModel(getTvOnTheAirUseCase)
     }
 
@@ -51,8 +46,8 @@ class TvShowsViewModelTest {
             val tvShow = MutableLiveData<Result<List<TvOnTheAir>>>()
             tvShow.value = dummyTvShow()
             Mockito.`when`(getTvOnTheAirUseCase.invoke(UseCase.None)).thenReturn(tvShow.value)
-
             viewModel.getTvShows()
+            Mockito.verify(getTvOnTheAirUseCase).invoke(UseCase.None)
             viewModel.tvShows.observerTest {
                 when (it) {
                     is Result.Success -> {

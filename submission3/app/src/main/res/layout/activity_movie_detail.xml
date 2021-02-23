@@ -21,14 +21,14 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/tvVoteCount"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMovieVoteCount"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:layout_constraintTop_toTopOf="@+id/tvTitleMovie"
             tools:ignore="ContentDescription"
             tools:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvTitleMovie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -40,43 +40,43 @@
             tools:text="ini nama filmnya" />
 
         <TextView
-            android:id="@+id/tvPopularity"
+            android:id="@+id/tvMoviePopularity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:layout_constraintStart_toStartOf="@+id/tvTitleMovie"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleMovie"
             tools:text="popularity" />
 
         <TextView
-            android:id="@+id/tvDate"
+            android:id="@+id/tvMovieReleaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvPopularity"
-            app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
+            app:layout_constraintStart_toStartOf="@+id/tvMoviePopularity"
+            app:layout_constraintTop_toBottomOf="@+id/tvMoviePopularity"
             tools:text="release date" />
 
         <TextView
-            android:id="@+id/tvVoteAverage"
+            android:id="@+id/tvMovieVoteAverage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvDate"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate"
+            app:layout_constraintStart_toStartOf="@+id/tvMovieReleaseDate"
+            app:layout_constraintTop_toBottomOf="@+id/tvMovieReleaseDate"
             tools:text="vote average" />
 
         <TextView
-            android:id="@+id/tvVoteCount"
+            android:id="@+id/tvMovieVoteCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvVoteAverage"
-            app:layout_constraintTop_toBottomOf="@+id/tvVoteAverage"
+            app:layout_constraintStart_toStartOf="@+id/tvMovieVoteAverage"
+            app:layout_constraintTop_toBottomOf="@+id/tvMovieVoteAverage"
             tools:text="vote count" />
 
         <TextView
-            android:id="@+id/tvOverview"
+            android:id="@+id/tvMovieOverview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -91,7 +91,6 @@
             android:id="@+id/shimmerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginEnd="411dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

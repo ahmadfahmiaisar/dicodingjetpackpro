@@ -9,6 +9,7 @@ import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvOnTheAir
 import com.example.submission.domain.usecase.tvshow.GetTvOnTheAirUseCase
+import com.example.submission.helper.EspressoIdlingResourceWrapper
 import kotlinx.coroutines.launch
 
 class TvShowsViewModel @ViewModelInject constructor(private val getTvOnTheAirUseCase: GetTvOnTheAirUseCase) :
@@ -19,9 +20,11 @@ class TvShowsViewModel @ViewModelInject constructor(private val getTvOnTheAirUse
         get() = _tvShows
 
     fun getTvShows() {
+        EspressoIdlingResourceWrapper.increment()
         _tvShows.value = Result.Loading
         viewModelScope.launch {
             _tvShows.value = getTvOnTheAirUseCase(UseCase.None)
+            EspressoIdlingResourceWrapper.decrement()
         }
     }
 }

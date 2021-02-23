@@ -22,7 +22,7 @@ class TvShowDetailActivity : BaseActivity<ActivityTvShowDetailBinding, TvShowDet
         TvShowDetailViewModel::class.java
 
     companion object {
-        private const val INTENT_KEY_TV_ID = "tvid"
+        const val INTENT_KEY_TV_ID = "tvid"
 
         @JvmStatic
         fun start(context: Context, tvId: Int) {
@@ -65,12 +65,12 @@ class TvShowDetailActivity : BaseActivity<ActivityTvShowDetailBinding, TvShowDet
     @SuppressLint("SetTextI18n")
     private fun displayDetailTv(data: TvShowDetail) {
         binding.ivMovieDetail.loadUrl(data.posterPath)
-        binding.tvTitle.text = data.name
-        binding.tvPopularity.text = "popularity: ${data.popularity}"
-        binding.tvDate.text = data.lastAirDate
-        binding.tvVoteAverage.text = "vote average: ${data.voteAverage}"
-        binding.tvVoteCount.text = "vote count: ${data.voteCount}"
-        binding.tvOverview.text = data.overview
+        binding.tvTitleTv.text = data.name
+        binding.tvPopularityTvShow.text = "popularity: ${data.popularity}"
+        binding.tvDateTvShow.text = data.lastAirDate
+        binding.tvVoteAverageTvShow.text = "vote average: ${data.voteAverage}"
+        binding.tvVoteCountTvShow.text = "vote count: ${data.voteCount}"
+        binding.tvOverViewTvShow.text = data.overview
     }
 
     override fun setupToolbar() {
