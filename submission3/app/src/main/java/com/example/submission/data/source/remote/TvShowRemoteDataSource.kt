@@ -1,8 +1,9 @@
-package com.example.submission.data.source
+package com.example.submission.data.source.remote
 
 import com.example.submission.data.response.tvshow.TvOnTheAirDto
 import com.example.submission.data.response.tvshow.TvShowDetailDto
 import com.example.submission.data.services.TvShowService
+import com.example.submission.data.source.core.RemoteDataSource
 import com.example.submission.data.vo.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
