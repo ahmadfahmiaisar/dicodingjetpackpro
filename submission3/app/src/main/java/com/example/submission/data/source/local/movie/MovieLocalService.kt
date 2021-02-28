@@ -1,4 +1,4 @@
-package com.example.submission.data.source.local
+package com.example.submission.data.source.local.movie
 
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import kotlinx.coroutines.CoroutineDispatcher

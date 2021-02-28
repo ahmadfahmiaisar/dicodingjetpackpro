@@ -20,21 +20,3 @@ data class MovieEntity(
     @ColumnInfo(name = "overview")
     var overview: String = ""
 )
-
-fun MovieEntity.mapToDomain(): MovieNowPlaying {
-    return MovieNowPlaying(
-        this.movieId.toInt(),
-        this.overview,
-        this.posterPath,
-        this.title
-    )
-}
-
-fun MovieNowPlaying.toEntity(): MovieEntity {
-    return MovieEntity(
-        this.id.toString(),
-        this.title,
-        this.posterPath,
-        this.overview
-    )
-}
