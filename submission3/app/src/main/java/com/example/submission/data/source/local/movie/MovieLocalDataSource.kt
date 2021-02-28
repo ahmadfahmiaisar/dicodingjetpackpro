@@ -1,4 +1,4 @@
-package com.example.submission.data.source.local
+package com.example.submission.data.source.local.movie
 
 import com.example.submission.data.database.dao.MovieDao
 import com.example.submission.data.database.entity.mapToDomain

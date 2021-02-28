@@ -4,9 +4,8 @@ import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
 import com.example.submission.data.response.movie.MovieDetailDto
 import com.example.submission.data.response.movie.NowPlayingDto
-import com.example.submission.data.source.MovieRemoteDataSource
+import com.example.submission.data.source.remote.MovieRemoteDataSource
 import com.example.submission.data.vo.Result
-import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -14,7 +13,6 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify

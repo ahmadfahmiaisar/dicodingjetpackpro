@@ -3,7 +3,7 @@ package com.example.submission.data.source.remote
 import com.example.submission.data.response.movie.MovieDetailDto
 import com.example.submission.data.response.movie.NowPlayingDto
 import com.example.submission.data.services.MovieService
-import com.example.submission.data.source.core.RemoteDataSource
+import com.example.submission.data.source.utils.RemoteDataSource
 import com.example.submission.data.vo.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject

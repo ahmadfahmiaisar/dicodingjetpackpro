@@ -1,4 +1,4 @@
-package com.example.submission.data.source.core
+package com.example.submission.data.source.utils
 
 import com.example.submission.data.vo.HttpResult
 import com.squareup.moshi.Moshi

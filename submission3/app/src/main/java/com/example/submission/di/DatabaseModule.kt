@@ -5,15 +5,12 @@ import androidx.room.Room
 import com.example.submission.data.database.AppDatabase
 import com.example.submission.data.database.dao.MovieDao
 import com.example.submission.data.database.dao.TvShowDao
-import com.example.submission.data.source.local.MovieLocalDataSource
-import com.example.submission.data.source.local.MovieLocalService
 import com.example.submission.data.vo.Constant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)

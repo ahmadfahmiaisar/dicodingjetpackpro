@@ -3,13 +3,12 @@ package com.example.submission.data.repository
 import com.example.submission.data.dispatcher.DispatcherProvider
 import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
-import com.example.submission.data.source.local.MovieLocalDataSource
+import com.example.submission.data.source.local.movie.MovieLocalDataSource
 import com.example.submission.data.source.remote.MovieRemoteDataSource
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieDetail
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.domain.repository.MovieRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -22,20 +21,13 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getMovieNowPlaying(): Result<List<MovieNowPlaying>> {
         val apiResult = movieRemoteDataSource.getMovieNowPlaying(dispatcher.io)
         val localResult = movieLocalDataSource.getMovie(dispatcher.io)
-        val movie = mutableListOf<MovieNowPlaying>()
-        localResult.forEach {
-            movie.add(it)
-        }
-        Timber.tag("ISINYAAA").d("$movie dan $localResult")
         return when {
             !localResult.isNullOrEmpty() -> {
-                Timber.tag("ISINYA LOCAL")
-                Result.Success(movie)
+                Result.Success(localResult)
             }
             else -> {
                 when (apiResult) {
                     is Result.Success -> {
-                        Timber.tag("ISINYA REMOTE")
                         movieLocalDataSource.insertMovie(
                             dispatcher.io,
                             movieMapper.map(apiResult.data)
