@@ -8,16 +8,24 @@ import androidx.lifecycle.viewModelScope
 import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieNowPlaying
+import com.example.submission.domain.usecase.movie.GetAllMovieFavoriteUseCase
 import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
 import com.example.submission.helper.EspressoIdlingResourceWrapper
 import kotlinx.coroutines.launch
 
-class MoviesViewModel @ViewModelInject constructor(private val getMovieNowPlayingUseCase: GetMovieNowPlayingUseCase) :
+class MoviesViewModel @ViewModelInject constructor(
+    private val getMovieNowPlayingUseCase: GetMovieNowPlayingUseCase,
+    private val getAllMovieFavoriteUseCase: GetAllMovieFavoriteUseCase
+) :
     ViewModel() {
 
     private val _movie = MutableLiveData<Result<List<MovieNowPlaying>>>()
     val movie: LiveData<Result<List<MovieNowPlaying>>>
         get() = _movie
+
+    private val _favoriteMovie = MutableLiveData<Result<List<MovieNowPlaying>>>()
+    val favoriteMovie: LiveData<Result<List<MovieNowPlaying>>>
+        get() = _favoriteMovie
 
     fun getMovie() {
         EspressoIdlingResourceWrapper.increment()
@@ -25,6 +33,13 @@ class MoviesViewModel @ViewModelInject constructor(private val getMovieNowPlayin
         viewModelScope.launch {
             _movie.value = getMovieNowPlayingUseCase(UseCase.None)
             EspressoIdlingResourceWrapper.decrement()
+        }
+    }
+
+    fun getMovieFavorite() {
+        _favoriteMovie.value = Result.Loading
+        viewModelScope.launch {
+            _favoriteMovie.value = getAllMovieFavoriteUseCase(UseCase.None)
         }
     }
 }
