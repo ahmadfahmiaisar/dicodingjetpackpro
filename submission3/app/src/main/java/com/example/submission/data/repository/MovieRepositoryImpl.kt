@@ -5,6 +5,7 @@ import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
 import com.example.submission.data.source.local.movie.MovieLocalDataSource
 import com.example.submission.data.source.remote.MovieRemoteDataSource
+import com.example.submission.data.vo.HttpResult
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieDetail
 import com.example.submission.domain.entity.movie.MovieNowPlaying
@@ -52,6 +53,14 @@ class MovieRepositoryImpl @Inject constructor(
             is Result.Success -> Result.Success(movieDetailMapper.map(apiResult.data))
             is Result.Error -> Result.Error(apiResult.cause, apiResult.code, apiResult.errorMessage)
             else -> Result.Error()
+        }
+    }
+
+    override suspend fun getAllMovieFavorite(): Result<List<MovieNowPlaying>> {
+        val localResult = movieLocalDataSource.getAllMovieFavorite(dispatcher.io)
+        return when {
+            localResult.isNullOrEmpty() -> Result.Error()
+            else -> Result.Success(localResult)
         }
     }
 }

@@ -7,4 +7,6 @@ import com.example.submission.domain.entity.movie.MovieNowPlaying
 interface MovieRepository {
     suspend fun getMovieNowPlaying(): Result<List<MovieNowPlaying>>
     suspend fun getMovieDetail(movieId: Int): Result<MovieDetail>
+
+    suspend fun getAllMovieFavorite(): Result<List<MovieNowPlaying>>
 }

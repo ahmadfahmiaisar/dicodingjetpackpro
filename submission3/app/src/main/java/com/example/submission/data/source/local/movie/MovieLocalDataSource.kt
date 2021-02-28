@@ -22,4 +22,8 @@ class MovieLocalDataSource @Inject constructor(
             dao.insert(movieMapper.toEntity(it))
         }
     }
+
+    override suspend fun getAllMovieFavorite(dispatcher: CoroutineDispatcher): List<MovieNowPlaying> {
+        return dao.getAllMovieFavorite().map { movieMapper.mapToDomain(it) }
+    }
 }

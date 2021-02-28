@@ -33,7 +33,8 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto, List<MovieNowPla
             input.id.toString(),
             input.title,
             input.posterPath,
-            input.overview
+            input.overview,
+            false
         )
     }
 }

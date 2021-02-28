@@ -13,4 +13,7 @@ abstract class MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(movieEntity: MovieEntity)
+
+    @Query("SELECT * FROM movie WHERE isFavorite = 1")
+    abstract suspend fun getAllMovieFavorite(): List<MovieEntity>
 }
