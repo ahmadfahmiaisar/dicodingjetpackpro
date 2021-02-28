@@ -26,7 +26,8 @@ class GetMovieNowPlayingUseCase @Inject constructor(private val movieRepository:
             this.id,
             this.overview,
             "${IMAGE_BASE_URL_POSTER}${this.posterPath}",
-            this.title
+            this.title,
+            this.isFavorite
         )
     }
 }

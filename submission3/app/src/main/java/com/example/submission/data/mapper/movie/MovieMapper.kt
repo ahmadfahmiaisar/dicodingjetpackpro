@@ -13,7 +13,8 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto, List<MovieNowPla
                 it.id ?: 0,
                 it.overview ?: "",
                 it.posterPath ?: "",
-                it.title ?: ""
+                it.title ?: "",
+                false
             )
         } ?: emptyList()
     }
@@ -24,7 +25,8 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto, List<MovieNowPla
             input.movieId.toInt(),
             input.overview,
             input.posterPath,
-            input.title
+            input.title,
+            input.isFavorite
         )
     }
 

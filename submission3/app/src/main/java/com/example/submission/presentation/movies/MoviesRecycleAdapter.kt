@@ -3,6 +3,7 @@ package com.example.submission.presentation.movies
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.submission.R
 import com.example.submission.databinding.ItemMoviesBinding
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.util.loadUrl
@@ -30,6 +31,9 @@ class MoviesRecycleAdapter(private var movieNowPlaying: List<MovieNowPlaying>) :
             binding.movie = movieNowPlaying
             binding.ivMovie.loadUrl(movieNowPlaying.posterPath)
             binding.root.setOnClickListener { onMoviePressed(movieNowPlaying) }
+            if (movieNowPlaying.isFavorite) binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
+            else binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
+
             binding.executePendingBindings()
         }
     }

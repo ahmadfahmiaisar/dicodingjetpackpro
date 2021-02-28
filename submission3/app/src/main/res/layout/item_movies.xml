@@ -42,13 +42,23 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
-            android:layout_marginEnd="32dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{movie.overview}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
             app:layout_constraintStart_toEndOf="@+id/ivMovie"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             tools:text="film ini mengisahkan tentang masa perjuangan dari organisasi nahdliyin" />
+
+        <ImageView
+            android:id="@+id/ivFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_favorite" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

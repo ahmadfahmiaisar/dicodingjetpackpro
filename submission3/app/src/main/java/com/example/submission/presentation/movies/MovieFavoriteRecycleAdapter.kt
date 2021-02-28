@@ -4,11 +4,11 @@ package com.example.submission.presentation.movies
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.submission.R
 import com.example.submission.databinding.ItemMoviesFavoriteBinding
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.util.IMAGE_BASE_URL_POSTER
 import com.example.submission.util.loadUrl
-import timber.log.Timber
 
 class MovieFavoriteRecycleAdapter(private var movieFavorite: List<MovieNowPlaying>) :
     RecyclerView.Adapter<MovieFavoriteRecycleAdapter.ViewHolder>() {
@@ -29,10 +29,11 @@ class MovieFavoriteRecycleAdapter(private var movieFavorite: List<MovieNowPlayin
 
     class ViewHolder(private val binding: ItemMoviesFavoriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movieNowPlaying: MovieNowPlaying, onMoviePressed: (MovieNowPlaying) -> Unit) {
-            binding.movie = movieNowPlaying
-            binding.ivMovie.loadUrl("$IMAGE_BASE_URL_POSTER${movieNowPlaying.posterPath}")
-            binding.root.setOnClickListener { onMoviePressed(movieNowPlaying) }
+        fun bind(movie: MovieNowPlaying, onMoviePressed: (MovieNowPlaying) -> Unit) {
+            binding.movie = movie
+            binding.ivMovie.loadUrl("$IMAGE_BASE_URL_POSTER${movie.posterPath}")
+            binding.root.setOnClickListener { onMoviePressed(movie) }
+
             binding.executePendingBindings()
         }
     }
