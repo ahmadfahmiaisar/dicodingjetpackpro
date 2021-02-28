@@ -10,12 +10,14 @@ import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.domain.usecase.movie.GetAllMovieFavoriteUseCase
 import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
+import com.example.submission.domain.usecase.movie.UpdateFavoriteMovieUseCase
 import com.example.submission.helper.EspressoIdlingResourceWrapper
 import kotlinx.coroutines.launch
 
 class MoviesViewModel @ViewModelInject constructor(
     private val getMovieNowPlayingUseCase: GetMovieNowPlayingUseCase,
-    private val getAllMovieFavoriteUseCase: GetAllMovieFavoriteUseCase
+    private val getAllMovieFavoriteUseCase: GetAllMovieFavoriteUseCase,
+    private val updateFavoriteMovieUseCase: UpdateFavoriteMovieUseCase
 ) :
     ViewModel() {
 
@@ -26,6 +28,10 @@ class MoviesViewModel @ViewModelInject constructor(
     private val _favoriteMovie = MutableLiveData<Result<List<MovieNowPlaying>>>()
     val favoriteMovie: LiveData<Result<List<MovieNowPlaying>>>
         get() = _favoriteMovie
+
+    private val _areStatusFavorite = MutableLiveData<Unit>()
+    val areStatusFavorite: LiveData<Unit>
+        get() = _areStatusFavorite
 
     fun getMovie() {
         EspressoIdlingResourceWrapper.increment()
@@ -40,6 +46,12 @@ class MoviesViewModel @ViewModelInject constructor(
         _favoriteMovie.value = Result.Loading
         viewModelScope.launch {
             _favoriteMovie.value = getAllMovieFavoriteUseCase(UseCase.None)
+        }
+    }
+
+    fun setStatusFavoriteMovie(isFavorite: Boolean, movieId: Int) {
+        viewModelScope.launch {
+            _areStatusFavorite.value = updateFavoriteMovieUseCase(isFavorite, movieId)
         }
     }
 }

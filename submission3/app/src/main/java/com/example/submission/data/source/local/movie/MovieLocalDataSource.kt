@@ -1,6 +1,7 @@
 package com.example.submission.data.source.local.movie
 
 import com.example.submission.data.database.dao.MovieDao
+import com.example.submission.data.database.entity.MovieEntity
 import com.example.submission.data.mapper.movie.MovieMapper
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,4 +27,12 @@ class MovieLocalDataSource @Inject constructor(
     override suspend fun getAllMovieFavorite(dispatcher: CoroutineDispatcher): List<MovieNowPlaying> {
         return dao.getAllMovieFavorite().map { movieMapper.mapToDomain(it) }
     }
+
+    override suspend fun updateFavoriteMovie(
+        dispatcher: CoroutineDispatcher,
+        isFavorite: Boolean, movieId: Int
+    ) {
+        dao.updateFavoriteMovie(isFavorite, movieId)
+    }
+
 }

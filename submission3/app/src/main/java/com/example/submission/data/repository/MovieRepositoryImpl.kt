@@ -1,5 +1,6 @@
 package com.example.submission.data.repository
 
+import com.example.submission.data.database.entity.MovieEntity
 import com.example.submission.data.dispatcher.DispatcherProvider
 import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
@@ -62,5 +63,9 @@ class MovieRepositoryImpl @Inject constructor(
             localResult.isNullOrEmpty() -> Result.Error()
             else -> Result.Success(localResult)
         }
+    }
+
+    override suspend fun updateFavoriteMovie(isFavorite: Boolean, movieId: Int) {
+        return movieLocalDataSource.updateFavoriteMovie(dispatcher.io, isFavorite, movieId)
     }
 }

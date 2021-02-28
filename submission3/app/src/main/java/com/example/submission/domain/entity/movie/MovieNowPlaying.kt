@@ -5,5 +5,5 @@ data class MovieNowPlaying(
     val overview: String,
     val posterPath: String,
     val title: String,
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 )
