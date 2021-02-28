@@ -40,6 +40,14 @@
                 tools:listitem="@layout/item_movies_favorite" />
         </ScrollView>
 
+        <com.example.submission.view.shimmerview.ShimmerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:id="@+id/shimmerViewFavoriteMovie"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/tvFavoriteMovie" />
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
