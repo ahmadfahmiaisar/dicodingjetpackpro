@@ -24,7 +24,7 @@ class MovieRepositoryImpl @Inject constructor(
         val localResult = movieLocalDataSource.getMovie()
         return when {
             !localResult.isNullOrEmpty() -> {
-                Result.Success(localResult.map { movieMapper.mapToDomain(it) })
+                Result.Success(movieMapper.mapToDomain(localResult))
             }
             else -> {
                 when (apiResult) {

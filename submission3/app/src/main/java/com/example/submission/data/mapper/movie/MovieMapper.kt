@@ -20,14 +20,16 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto, List<MovieNowPla
     }
 
 
-    fun mapToDomain(input: MovieEntity): MovieNowPlaying {
-        return MovieNowPlaying(
-            input.movieId.toInt(),
-            input.overview,
-            input.posterPath,
-            input.title,
-            input.isFavorite
-        )
+    fun mapToDomain(input: List<MovieEntity>): List<MovieNowPlaying> {
+        return input.map {
+            MovieNowPlaying(
+                it.movieId.toInt(),
+                it.overview,
+                it.posterPath,
+                it.title,
+                it.isFavorite
+            )
+        }
     }
 
     fun toEntity(input: NowPlayingDto): List<MovieEntity> {
