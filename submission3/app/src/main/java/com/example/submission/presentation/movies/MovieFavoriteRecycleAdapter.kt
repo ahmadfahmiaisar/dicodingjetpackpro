@@ -4,9 +4,10 @@ package com.example.submission.presentation.movies
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.databinding.ItemMoviesFavoriteBinding
+import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.util.IMAGE_BASE_URL_POSTER
+import com.example.submission.util.loadUrl
 
 class MovieFavoriteRecycleAdapter(private var movieFavorite: List<MovieEntity>) :
     RecyclerView.Adapter<MovieFavoriteRecycleAdapter.ViewHolder>() {
