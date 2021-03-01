@@ -7,7 +7,7 @@
 
         <variable
             name="movie"
-            type="com.example.submission.domain.entity.movie.MovieNowPlaying" />
+            type="com.example.submission.domain.entity.movie.MovieEntity" />
     </data>
 
     <androidx.cardview.widget.CardView

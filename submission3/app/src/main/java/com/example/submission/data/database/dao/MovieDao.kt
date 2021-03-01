@@ -1,7 +1,7 @@
 package com.example.submission.data.database.dao
 
 import androidx.room.*
-import com.example.submission.data.database.entity.MovieEntity
+import com.example.submission.domain.entity.movie.MovieEntity
 
 @Dao
 abstract class MovieDao {
@@ -9,7 +9,7 @@ abstract class MovieDao {
     abstract suspend fun getMovie(): List<MovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(movieEntity: MovieEntity)
+    abstract suspend fun insert(movieEntity: List<MovieEntity>)
 
     @Query("SELECT * FROM movie WHERE isFavorite = 1")
     abstract suspend fun getAllMovieFavorite(): List<MovieEntity>

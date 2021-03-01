@@ -114,7 +114,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         binding.rvFavoriteMovie.adapter = adapterMovieFavorite
 
         adapterMovieFavorite.setOnMoviePressed {
-            MovieDetailActivity.start(requireActivity(), it.id)
+            MovieDetailActivity.start(requireActivity(), it.movieId.toInt())
         }
     }
 }

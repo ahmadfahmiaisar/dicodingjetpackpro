@@ -1,4 +1,4 @@
-package com.example.submission.data.database.entity
+package com.example.submission.domain.entity.movie
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

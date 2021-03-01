@@ -1,13 +1,14 @@
 package com.example.submission.data.source.local.movie
 
-import com.example.submission.data.database.entity.MovieEntity
-import com.example.submission.domain.entity.movie.MovieNowPlaying
-import kotlinx.coroutines.CoroutineDispatcher
+import com.example.submission.domain.entity.movie.MovieEntity
 
 interface MovieLocalService {
-    suspend fun getMovie(dispatcher: CoroutineDispatcher): List<MovieNowPlaying>
-    suspend fun insertMovie(dispatcher: CoroutineDispatcher, movies: List<MovieNowPlaying>)
+    suspend fun getMovie(): List<MovieEntity>
+    suspend fun insertMovie(movies: List<MovieEntity>)
 
-    suspend fun getAllMovieFavorite(dispatcher: CoroutineDispatcher): List<MovieNowPlaying>
-    suspend fun updateFavoriteMovie(dispatcher: CoroutineDispatcher, isFavorite: Boolean, movieId: Int)
+    suspend fun getAllMovieFavorite(): List<MovieEntity>
+    suspend fun updateFavoriteMovie(
+        isFavorite: Boolean,
+        movieId: Int
+    )
 }

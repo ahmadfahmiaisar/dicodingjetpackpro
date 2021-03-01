@@ -1,7 +1,7 @@
 package com.example.submission.data.mapper.movie
 
 import com.example.submission.abstraction.Mapper
-import com.example.submission.data.database.entity.MovieEntity
+import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.data.response.movie.NowPlayingDto
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import javax.inject.Inject
@@ -30,13 +30,19 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto, List<MovieNowPla
         )
     }
 
-    fun toEntity(input: MovieNowPlaying): MovieEntity {
-        return MovieEntity(
-            input.id.toString(),
-            input.title,
-            input.posterPath,
-            input.overview,
-            false
-        )
+    fun toEntity(input: NowPlayingDto): List<MovieEntity> {
+        val movies = mutableListOf<MovieEntity>()
+        input.results?.map {
+            movies.add(
+                MovieEntity(
+                    it.id.toString() ?: "",
+                    it.title ?: "",
+                    it.posterPath ?: "",
+                    it.overview ?: "",
+                    false
+                )
+            )
+        }
+        return movies
     }
 }
