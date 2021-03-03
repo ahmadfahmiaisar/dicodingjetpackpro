@@ -4,8 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.submission.data.database.dao.MovieDao
 import com.example.submission.data.database.dao.TvShowDao
-import com.example.submission.data.database.entity.MovieEntity
-import com.example.submission.data.database.entity.TvShowEntity
+import com.example.submission.domain.entity.movie.MovieEntity
+import com.example.submission.domain.entity.tvshow.TvShowEntity
 
 @Database(entities = [MovieEntity::class, TvShowEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
