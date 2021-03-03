@@ -41,7 +41,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         vm.favoriteMovie.observe(viewLifecycleOwner, {
             when (it) {
                 is Result.Loading -> {
-                    binding.shimmerViewFavoriteMovie.start(1, R.layout.placeholder_item_movie_favorite)
+                    binding.shimmerViewFavoriteMovie.start(
+                        1,
+                        R.layout.placeholder_item_movie_favorite
+                    )
                     binding.tvFavoriteMovie.gone()
                     binding.horizontalScrollView.gone()
                 }
@@ -86,6 +89,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
     private fun observeSetStatusFavorite() {
         vm.areStatusFavorite.observe(viewLifecycleOwner, {
             Toast.makeText(requireActivity(), "favorite changed", Toast.LENGTH_SHORT).show()
+            vm.getMovieFavorite()
         })
     }
 
@@ -99,11 +103,9 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         }
         adapter.setOnFavoriteMovieChecked {
             vm.setStatusFavoriteMovie(true, it.id)
-            vm.getMovieFavorite()
         }
         adapter.setOnFavoriteMovieUnChecked {
             vm.setStatusFavoriteMovie(false, it.id)
-            vm.getMovieFavorite()
         }
     }
 
