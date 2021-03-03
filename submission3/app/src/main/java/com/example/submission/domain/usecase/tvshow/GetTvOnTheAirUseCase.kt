@@ -26,7 +26,8 @@ class GetTvOnTheAirUseCase @Inject constructor(private val tvShowRepository: TvS
             this.id,
             this.name,
             this.overview,
-            "${IMAGE_BASE_URL_POSTER}${this.posterPath}"
+            "${IMAGE_BASE_URL_POSTER}${this.posterPath}",
+            this.isFavorite
         )
     }
 }

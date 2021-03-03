@@ -4,7 +4,7 @@ import com.example.submission.data.mapper.tvshow.TvOnTheAirMapper
 import com.example.submission.data.mapper.tvshow.TvShowDetailMapper
 import com.example.submission.data.response.tvshow.TvOnTheAirDto
 import com.example.submission.data.response.tvshow.TvShowDetailDto
-import com.example.submission.data.source.TvShowRemoteDataSource
+import com.example.submission.data.source.remote.TvShowRemoteDataSource
 import com.example.submission.data.vo.Result
 import com.example.submission.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi

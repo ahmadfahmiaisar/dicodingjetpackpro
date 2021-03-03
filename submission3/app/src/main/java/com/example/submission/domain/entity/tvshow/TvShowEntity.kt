@@ -18,5 +18,8 @@ data class TvShowEntity(
     var posterPath: String = "",
 
     @ColumnInfo(name = "overview")
-    var overview: String = ""
+    var overview: String = "",
+
+    @ColumnInfo(name = "isFavorite")
+    var isFavorite: Boolean = false
 )
