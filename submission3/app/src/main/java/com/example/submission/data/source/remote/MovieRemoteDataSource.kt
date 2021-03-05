@@ -11,8 +11,11 @@ import javax.inject.Inject
 class MovieRemoteDataSource @Inject constructor(private val movieService: MovieService) :
     RemoteDataSource() {
 
-    suspend fun getMovieNowPlaying(dispatcherProvider: CoroutineDispatcher): Result<NowPlayingDto> {
-        return safeApiCall(dispatcherProvider) { movieService.getMovieNowPlaying() }
+    suspend fun getMovieNowPlaying(
+        dispatcherProvider: CoroutineDispatcher,
+        page: Int
+    ): Result<NowPlayingDto> {
+        return safeApiCall(dispatcherProvider) { movieService.getMovieNowPlaying(page = page) }
     }
 
     suspend fun getMovieDetail(

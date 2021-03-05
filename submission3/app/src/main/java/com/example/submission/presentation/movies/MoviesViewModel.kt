@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.example.submission.abstraction.UseCase
 import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.data.vo.Result
@@ -13,6 +14,7 @@ import com.example.submission.domain.usecase.movie.GetAllMovieFavoriteUseCase
 import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
 import com.example.submission.domain.usecase.movie.UpdateFavoriteMovieUseCase
 import com.example.submission.helper.EspressoIdlingResourceWrapper
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class MoviesViewModel @ViewModelInject constructor(
@@ -38,7 +40,7 @@ class MoviesViewModel @ViewModelInject constructor(
         EspressoIdlingResourceWrapper.increment()
         _movie.value = Result.Loading
         viewModelScope.launch {
-            _movie.value = getMovieNowPlayingUseCase(UseCase.None)
+//            _movie.value = getMovieNowPlayingUseCase(UseCase.None)
             EspressoIdlingResourceWrapper.decrement()
         }
     }
@@ -54,5 +56,9 @@ class MoviesViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             _areStatusFavorite.value = updateFavoriteMovieUseCase(isFavorite, movieId)
         }
+    }
+
+    fun getAllMovie(): Flow<PagingData<MovieNowPlaying>>{
+        return getMovieNowPlayingUseCase()
     }
 }

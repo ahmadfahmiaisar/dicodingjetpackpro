@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 
 data class NowPlayingDto(
     @field:Json(name = "results")
-    val results: List<Result>?
+    val results: List<Result> = emptyList()
 ) {
     data class Result(
         @field:Json(name = "id")

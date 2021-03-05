@@ -1,13 +1,23 @@
 package com.example.submission.data.mapper.movie
 
 import com.example.submission.abstraction.Mapper
-import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.data.response.movie.NowPlayingDto
+import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import javax.inject.Inject
 
-class MovieMapper @Inject constructor() : Mapper<NowPlayingDto, List<MovieNowPlaying>>() {
-    override fun map(input: NowPlayingDto): List<MovieNowPlaying> {
+class MovieMapper @Inject constructor() : Mapper<NowPlayingDto.Result, MovieNowPlaying>() {
+    override fun map(input: NowPlayingDto.Result): MovieNowPlaying {
+        return MovieNowPlaying(
+            input.id ?: 0,
+            input.overview ?: "",
+            input.posterPath ?: "",
+            input.title ?: "",
+            false
+        )
+    }
+
+    fun mapOld(input: NowPlayingDto): List<MovieNowPlaying> {
         return input.results?.map {
             MovieNowPlaying(
                 it.id ?: 0,
@@ -47,4 +57,5 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto, List<MovieNowPla
         }
         return movies
     }
+
 }

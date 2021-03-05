@@ -3,17 +3,18 @@ package com.example.submission.presentation.movies
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submission.R
 import com.example.submission.abstraction.BaseFragment
 import com.example.submission.data.vo.Result
 import com.example.submission.databinding.FragmentMoviesBinding
 import com.example.submission.presentation.movies.detail.MovieDetailActivity
+import com.example.submission.util.RecycleViewLoadStateAdapter
 import com.example.submission.util.gone
 import com.example.submission.util.visible
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,12 +30,21 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
 
         setupRecycleView()
         setupRecycleViewMovieFavorite()
-        observeMovieNowPlaying()
+//        observeMovieNowPlaying()
         observeMovieFavorite()
         observeSetStatusFavorite()
-        vm.getMovie()
+//        vm.getMovie()
         vm.getMovieFavorite()
 
+        observeGetAllMovie()
+    }
+
+    private fun observeGetAllMovie() {
+        lifecycleScope.launch {
+            vm.getAllMovie().collectLatest {
+                adapter.submitData(it)
+            }
+        }
     }
 
     private fun observeMovieFavorite() {
@@ -96,7 +106,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
     private fun setupRecycleView() {
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvMovie.layoutManager = layoutManager
-        binding.rvMovie.adapter = adapter
+        binding.rvMovie.adapter = adapter.withLoadStateFooter(footer = RecycleViewLoadStateAdapter())
 
         adapter.setOnMoviePressed {
             MovieDetailActivity.start(requireActivity(), it.id)
