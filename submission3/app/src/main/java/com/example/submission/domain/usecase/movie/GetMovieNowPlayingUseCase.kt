@@ -18,23 +18,10 @@ class GetMovieNowPlayingUseCase @Inject constructor(private val movieRepository:
             }
     }
 
-
-    /* override suspend fun invoke(params: None): Result<List<MovieNowPlaying>> {
-         return handleData(movieRepository.getMovieNowPlaying())
-     }*/
-
     private fun handleData(result: MovieNowPlaying): MovieNowPlaying {
         return result.toUiModel()
     }
 
-    /* private fun handleData(result: Result<List<MovieNowPlaying>>): Result<List<MovieNowPlaying>> {
-         return when (result) {
-             is Result.Success -> Result.Success(result.data.map { it.toUiModel() })
-             is Result.Error -> Result.Error(result.cause, result.code, result.errorMessage)
-             else -> Result.Error()
-         }
-     }
- */
     private fun MovieNowPlaying.toUiModel(): MovieNowPlaying {
         return MovieNowPlaying(
             this.id,
