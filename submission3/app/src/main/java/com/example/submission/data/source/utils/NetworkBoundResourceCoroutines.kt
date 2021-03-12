@@ -3,15 +3,17 @@ package com.example.submission.data.source.utils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.example.submission.data.dispatcher.DispatcherProvider
+import com.example.submission.data.vo.Resource
 import com.example.submission.data.vo.Result
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 abstract class NetworkBoundResourceCoroutines<ResultType, RequestType> constructor(private val dispatcherProvider: DispatcherProvider) {
-    private val result = MediatorLiveData<Result<ResultType>>()
+    private val result = MediatorLiveData<Resource<ResultType>>()
 
     init {
-        result.value = Result.Loading
+        result.value = Resource.loading(null)
+
         @Suppress("LeakingThis")
         val dbSource = loadFromDb()
         result.addSource(dbSource) { data ->
@@ -19,7 +21,7 @@ abstract class NetworkBoundResourceCoroutines<ResultType, RequestType> construct
                 fetchFromNetwork(dbSource)
             } else {
                 result.addSource(dbSource) { newData ->
-                    setValue(Result.Success(newData))
+                    setValue(Resource.success(newData))
                 }
             }
         }
@@ -30,8 +32,8 @@ abstract class NetworkBoundResourceCoroutines<ResultType, RequestType> construct
 
     private fun fetchFromNetwork(dbSource: LiveData<ResultType>) {
         val apiResponse = createCall()
-        result.addSource(dbSource) {
-            setValue(Result.Loading)
+        result.addSource(dbSource) { newData ->
+            setValue(Resource.loading(newData))
         }
         result.addSource(apiResponse) { response ->
             result.removeSource(apiResponse)
@@ -42,7 +44,7 @@ abstract class NetworkBoundResourceCoroutines<ResultType, RequestType> construct
                         saveCallResult(processResponse(response))
                         GlobalScope.launch(dispatcherProvider.ui) {
                             result.addSource(loadFromDb()) { newData ->
-                                setValue(Result.Success(newData))
+                                setValue(Resource.success(newData))
                             }
                         }
                     }
@@ -50,14 +52,14 @@ abstract class NetworkBoundResourceCoroutines<ResultType, RequestType> construct
                 is Result.Empty -> {
                     GlobalScope.launch(dispatcherProvider.ui) {
                         result.addSource(loadFromDb()) { newData ->
-                            setValue(Result.Success(newData))
+                            setValue(Resource.success(newData))
                         }
                     }
                 }
                 is Result.Error -> {
                     onFetchFailed()
-                    result.addSource(dbSource) {
-                        setValue(Result.Error(response.cause, response.code, response.errorMessage))
+                    result.addSource(dbSource) { newData ->
+                        setValue(Resource.error(response.errorMessage, newData))
                     }
                 }
             }
@@ -70,9 +72,9 @@ abstract class NetworkBoundResourceCoroutines<ResultType, RequestType> construct
     private fun processResponse(response: Result.Success<RequestType>) = response.data
     protected open fun onFetchFailed() {}
 
-    fun asLiveData() = result as LiveData<Result<ResultType>>
+    fun asLiveData() = result as LiveData<Resource<ResultType>>
 
-    private fun setValue(newValue: Result<ResultType>) {
+    private fun setValue(newValue: Resource<ResultType>) {
         if (result != newValue) {
             result.value = newValue
         }
