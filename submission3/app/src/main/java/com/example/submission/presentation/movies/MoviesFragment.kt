@@ -22,7 +22,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
     override fun getLayoutResourceId(): Int = R.layout.fragment_movies
     override fun getViewModelClass(): Class<MoviesViewModel> = MoviesViewModel::class.java
 
-    private val adapter by lazy { MoviesRecycleAdapter(emptyList()) }
+    private val adapter by lazy { MoviesRecycleAdapter() }
     private val adapterMovieFavorite by lazy { MovieFavoriteRecycleAdapter(emptyList()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,7 +84,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
                 is Result.Success -> {
                     binding.rvMovie.visible()
                     binding.shimmerView.stop()
-                    adapter.refreshMovieNowPlaying(it.data)
+//                    adapter.refreshMovieNowPlaying(it.data)
                 }
                 is Result.Error -> {
                     binding.shimmerView.stop()
@@ -106,7 +106,8 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
     private fun setupRecycleView() {
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvMovie.layoutManager = layoutManager
-        binding.rvMovie.adapter = adapter.withLoadStateFooter(footer = RecycleViewLoadStateAdapter())
+        binding.rvMovie.adapter =
+            adapter.withLoadStateFooter(footer = RecycleViewLoadStateAdapter())
 
         adapter.setOnMoviePressed {
             MovieDetailActivity.start(requireActivity(), it.id)

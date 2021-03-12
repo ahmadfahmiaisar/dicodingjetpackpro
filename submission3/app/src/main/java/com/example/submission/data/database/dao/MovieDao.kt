@@ -1,12 +1,19 @@
 package com.example.submission.data.database.dao
 
-import androidx.room.*
+import androidx.paging.DataSource
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.example.submission.domain.entity.movie.MovieEntity
 
 @Dao
 abstract class MovieDao {
-    @Query("SELECT * FROM movie")
-    abstract suspend fun getMovie(): List<MovieEntity>
+    @Query("SELECT * FROM movie ORDER BY movieId ASC")
+    abstract fun getAllMovie(): DataSource.Factory<Int, MovieEntity>
+
+    @Query("SELECT * FROM movie ORDER BY movieId ASC limit :pageSize")
+    abstract suspend fun getMovie(pageSize: Int): List<MovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(movieEntity: List<MovieEntity>)

@@ -10,7 +10,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
@@ -18,17 +17,8 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
+    fun provideDatabase(context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, Constant.DATABASE_NAME).build()
-
-   /* @Provides
-    @ActivityScoped
-    fun providesMovieLocalDataSource(appDatabase: AppDatabase): MovieLocalService {
-        return MovieLocalDataSource(appDatabase)
-    }*/
-    /* @Provides
-     @FeatureScope
-     fun provideMovieDao(db: AppDatabase): MovieDao = db.movieDao() */
 
     @Provides
     @Singleton

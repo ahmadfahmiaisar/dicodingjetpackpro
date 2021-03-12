@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.example.submission.abstraction.UseCase
-import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.data.vo.Result
+import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.domain.usecase.movie.GetAllMovieFavoriteUseCase
 import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
@@ -58,7 +58,7 @@ class MoviesViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getAllMovie(): Flow<PagingData<MovieNowPlaying>>{
+    suspend fun getAllMovie(): Flow<PagingData<MovieNowPlaying>> {
         return getMovieNowPlayingUseCase()
     }
 }

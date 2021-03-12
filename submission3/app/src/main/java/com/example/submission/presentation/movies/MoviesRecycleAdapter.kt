@@ -10,10 +10,8 @@ import com.example.submission.databinding.ItemMoviesBinding
 import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.util.loadUrl
 
-class MoviesRecycleAdapter(private var movieNowPlaying: List<MovieNowPlaying>) :
-    PagingDataAdapter<MovieNowPlaying, MoviesRecycleAdapter.ViewHolder>(
-        differCallback
-    ) {
+class MoviesRecycleAdapter :
+    PagingDataAdapter<MovieNowPlaying, MoviesRecycleAdapter.ViewHolder>(differCallback) {
 
     private var onMoviePressed: (MovieNowPlaying) -> Unit = {}
     private var onFavoriteMovieChecked: (MovieNowPlaying) -> Unit = {}
@@ -26,16 +24,13 @@ class MoviesRecycleAdapter(private var movieNowPlaying: List<MovieNowPlaying>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val moviePosition = getItem(position) ?: return
         holder.bind(
-            moviePosition,
+            getItem(position) ?: return,
             onMoviePressed,
             onFavoriteMovieChecked,
             onFavoriteMovieUnChecked
         )
     }
-
-    override fun getItemCount(): Int = movieNowPlaying.size
 
     class ViewHolder(private val binding: ItemMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -87,10 +82,9 @@ class MoviesRecycleAdapter(private var movieNowPlaying: List<MovieNowPlaying>) :
         }
     }
 
-    fun refreshMovieNowPlaying(movieNowPlaying: List<MovieNowPlaying>) {
-        this.movieNowPlaying = movieNowPlaying
-        notifyDataSetChanged()
-    }
+    /*   fun refreshMovieNowPlaying(pagingData: PagingData<MovieNowPlaying>) {
+             submitData(pagingData)
+         }*/
 
     fun setOnMoviePressed(movie: (MovieNowPlaying) -> Unit) {
         this.onMoviePressed = movie

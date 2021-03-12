@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class GetMovieNowPlayingUseCase @Inject constructor(private val movieRepository: MovieRepository) {
 
-    operator fun invoke(): Flow<PagingData<MovieNowPlaying>> {
+    suspend operator fun invoke(): Flow<PagingData<MovieNowPlaying>> {
         return movieRepository.getAllMovie()
             .map {
                 it.map { data -> handleData(data) }

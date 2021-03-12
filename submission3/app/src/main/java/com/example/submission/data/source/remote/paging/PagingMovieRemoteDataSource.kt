@@ -5,11 +5,12 @@ import com.example.submission.data.dispatcher.DispatcherProvider
 import com.example.submission.data.response.movie.NowPlayingDto
 import com.example.submission.data.source.remote.MovieRemoteDataSource
 import com.example.submission.data.vo.Result
+import timber.log.Timber
 import javax.inject.Inject
 
 class PagingMovieRemoteDataSource @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
-    private val movieRemoteDataSource: MovieRemoteDataSource
+    private val remoteDataSource: MovieRemoteDataSource
 ) : PagingSource<Int, NowPlayingDto.Result>() {
     companion object {
         const val PAGE_SIZE = 20
@@ -20,8 +21,8 @@ class PagingMovieRemoteDataSource @Inject constructor(
             val currentKey = params.key ?: 1
             val previousKey = if (currentKey == 1) null else currentKey - 1
             val nextKey = currentKey + 1
-            val apiResult =
-                movieRemoteDataSource.getMovieNowPlaying(dispatcherProvider.io, currentKey)
+            Timber.tag("ISINYAWO").d("current key $currentKey nextkey $nextKey")
+            val apiResult = remoteDataSource.getMovieNowPlaying(dispatcherProvider.io, currentKey)
             return when (apiResult) {
                 is Result.Success -> {
                     if (apiResult.data.results.isNullOrEmpty()) {
@@ -37,7 +38,6 @@ class PagingMovieRemoteDataSource @Inject constructor(
                             nextKey = nextKey
                         )
                     }
-
                 }
                 is Result.Error -> LoadResult.Error(Exception())
                 else -> LoadResult.Error(Exception())
