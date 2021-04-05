@@ -7,15 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.submission.R
 import com.example.submission.databinding.ItemMoviesBinding
-import com.example.submission.domain.entity.movie.MovieNowPlaying
+import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.util.loadUrl
+import timber.log.Timber
 
 class MoviesRecycleAdapter :
-    PagingDataAdapter<MovieNowPlaying, MoviesRecycleAdapter.ViewHolder>(differCallback) {
+    PagingDataAdapter<MovieEntity, MoviesRecycleAdapter.ViewHolder>(differCallback) {
 
-    private var onMoviePressed: (MovieNowPlaying) -> Unit = {}
-    private var onFavoriteMovieChecked: (MovieNowPlaying) -> Unit = {}
-    private var onFavoriteMovieUnChecked: (MovieNowPlaying) -> Unit = {}
+    private var onMoviePressed: (MovieEntity) -> Unit = {}
+    private var onFavoriteMovieChecked: (MovieEntity) -> Unit = {}
+    private var onFavoriteMovieUnChecked: (MovieEntity) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -35,28 +36,28 @@ class MoviesRecycleAdapter :
     class ViewHolder(private val binding: ItemMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            movieNowPlaying: MovieNowPlaying,
-            onMoviePressed: (MovieNowPlaying) -> Unit,
-            onFavoriteMovieChecked: (MovieNowPlaying) -> Unit,
-            onFavoriteMovieUnChecked: (MovieNowPlaying) -> Unit
+            movie: MovieEntity,
+            onMoviePressed: (MovieEntity) -> Unit,
+            onFavoriteMovieChecked: (MovieEntity) -> Unit,
+            onFavoriteMovieUnChecked: (MovieEntity) -> Unit
         ) {
-            binding.movie = movieNowPlaying
-            binding.ivMovie.loadUrl(movieNowPlaying.posterPath)
-            binding.root.setOnClickListener { onMoviePressed(movieNowPlaying) }
-            if (movieNowPlaying.isFavorite) {
+            binding.movie = movie
+            binding.ivMovie.loadUrl(movie.posterPath)
+            binding.root.setOnClickListener { onMoviePressed(movie) }
+            if (movie.isFavorite) {
                 binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
             } else {
                 binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
             }
 
             binding.ivFavorite.setOnClickListener {
-                movieNowPlaying.isFavorite = !movieNowPlaying.isFavorite
-                if (movieNowPlaying.isFavorite) {
+                movie.isFavorite = !movie.isFavorite
+                if (movie.isFavorite) {
                     binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
-                    onFavoriteMovieChecked(movieNowPlaying)
+                    onFavoriteMovieChecked(movie)
                 } else {
                     binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
-                    onFavoriteMovieUnChecked(movieNowPlaying)
+                    onFavoriteMovieUnChecked(movie)
                 }
             }
             binding.executePendingBindings()
@@ -64,17 +65,17 @@ class MoviesRecycleAdapter :
     }
 
     companion object {
-        val differCallback = object : DiffUtil.ItemCallback<MovieNowPlaying>() {
+        val differCallback = object : DiffUtil.ItemCallback<MovieEntity>() {
             override fun areItemsTheSame(
-                oldItem: MovieNowPlaying,
-                newItem: MovieNowPlaying
+                oldItem: MovieEntity,
+                newItem: MovieEntity
             ): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.movieId == newItem.movieId
             }
 
             override fun areContentsTheSame(
-                oldItem: MovieNowPlaying,
-                newItem: MovieNowPlaying
+                oldItem: MovieEntity,
+                newItem: MovieEntity
             ): Boolean {
                 return oldItem == newItem
             }
@@ -82,19 +83,19 @@ class MoviesRecycleAdapter :
         }
     }
 
-    /*   fun refreshMovieNowPlaying(pagingData: PagingData<MovieNowPlaying>) {
+    /*   fun refreshMovieEntity(pagingData: PagingData<MovieEntity>) {
              submitData(pagingData)
          }*/
 
-    fun setOnMoviePressed(movie: (MovieNowPlaying) -> Unit) {
+    fun setOnMoviePressed(movie: (MovieEntity) -> Unit) {
         this.onMoviePressed = movie
     }
 
-    fun setOnFavoriteMovieChecked(movie: (MovieNowPlaying) -> Unit) {
+    fun setOnFavoriteMovieChecked(movie: (MovieEntity) -> Unit) {
         this.onFavoriteMovieChecked = movie
     }
 
-    fun setOnFavoriteMovieUnChecked(movie: (MovieNowPlaying) -> Unit) {
+    fun setOnFavoriteMovieUnChecked(movie: (MovieEntity) -> Unit) {
         this.onFavoriteMovieUnChecked = movie
     }
 }

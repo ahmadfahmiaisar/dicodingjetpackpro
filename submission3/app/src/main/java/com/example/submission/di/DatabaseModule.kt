@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.submission.data.database.AppDatabase
 import com.example.submission.data.database.dao.MovieDao
+import com.example.submission.data.database.dao.MovieRemoteKeysDao
 import com.example.submission.data.database.dao.TvShowDao
 import com.example.submission.data.vo.Constant
 import dagger.Module
@@ -27,4 +28,8 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideTvShowDao(db: AppDatabase): TvShowDao = db.tvShowDao()
+
+    @Provides
+    @Singleton
+    fun providesMovieRemotekeys(db: AppDatabase): MovieRemoteKeysDao = db.movieRemoteKeyDao()
 }

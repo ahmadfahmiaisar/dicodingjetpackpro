@@ -29,6 +29,7 @@ class TvShowRepositoryImplTest {
 
     private var tvShowDetailMapper = Mockito.mock(TvShowDetailMapper::class.java)
 
+/*
     @Before
     fun setup() {
         tvShowRepositoryImpl = TvShowRepositoryImpl(
@@ -38,6 +39,7 @@ class TvShowRepositoryImplTest {
             tvShowDetailMapper
         )
     }
+*/
 
     @Test
     fun getTvShow() {

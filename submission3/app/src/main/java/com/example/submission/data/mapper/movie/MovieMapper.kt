@@ -42,7 +42,7 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto.Result, MovieNowP
     fun mapToDomainList(input: List<MovieEntity>): List<MovieNowPlaying> {
         return input.map {
             MovieNowPlaying(
-                it.movieId.toInt(),
+                it.movieId,
                 it.overview,
                 it.posterPath,
                 it.title,
@@ -53,10 +53,10 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto.Result, MovieNowP
 
     fun toEntity(input: NowPlayingDto): List<MovieEntity> {
         val movies = mutableListOf<MovieEntity>()
-        input.results?.map {
+        input.results.map {
             movies.add(
                 MovieEntity(
-                    it.id.toString() ?: "",
+                    it.id ?: 0,
                     it.title ?: "",
                     it.posterPath ?: "",
                     it.overview ?: "",
@@ -71,7 +71,7 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto.Result, MovieNowP
         val movies = mutableListOf<MovieEntity>()
         movies.add(
             MovieEntity(
-                input.id.toString() ?: "",
+                input.id ?: 0,
                 input.title ?: "",
                 input.posterPath ?: "",
                 input.overview ?: "",
@@ -79,5 +79,15 @@ class MovieMapper @Inject constructor() : Mapper<NowPlayingDto.Result, MovieNowP
             )
         )
         return movies
+    }
+
+    fun toEntityTok(input: NowPlayingDto.Result): MovieEntity {
+        return MovieEntity(
+            input.id ?: 0,
+            input.title ?: "",
+            input.posterPath ?: "",
+            input.overview ?: "",
+            false
+        )
     }
 }

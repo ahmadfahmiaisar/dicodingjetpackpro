@@ -1,6 +1,5 @@
 package com.example.submission.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,8 +8,8 @@ import com.example.submission.domain.entity.tvshow.TvShowEntity
 
 @Dao
 abstract class TvShowDao {
-    @Query("SELECT * FROM tvshows")
-    abstract fun getTvShow(): LiveData<List<TvShowEntity>>
+    @Query("SELECT * FROM tvshows ORDER BY tvId")
+    abstract suspend fun getTvShow(): List<TvShowEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertTvShow(tvShowEntity: List<TvShowEntity>)

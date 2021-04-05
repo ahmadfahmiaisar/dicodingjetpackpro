@@ -1,17 +1,22 @@
 package com.example.submission.presentation.home.movies
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import com.example.submission.abstraction.UseCase
-import com.example.submission.data.vo.Result
-import com.example.submission.domain.entity.movie.MovieNowPlaying
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.cachedIn
+import com.example.submission.domain.entity.movie.MovieEntity
+import com.example.submission.domain.usecase.movie.GetAllMovieFavoriteUseCase
 import com.example.submission.domain.usecase.movie.GetMovieNowPlayingUseCase
+import com.example.submission.domain.usecase.movie.UpdateFavoriteMovieUseCase
 import com.example.submission.presentation.movies.MoviesViewModel
 import com.example.submission.utils.CoroutinesTestRule
-import com.example.submission.utils.observerTest
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -34,44 +39,61 @@ class MoviesViewModelTest {
     @Mock
     private var getMovieNowPlayingUseCase = mock(GetMovieNowPlayingUseCase::class.java)
 
+    @Mock
+    private var getAllMovieFavoriteUseCase = mock(GetAllMovieFavoriteUseCase::class.java)
+
+    @Mock
+    private var updateFavoriteMovieUseCase = mock(UpdateFavoriteMovieUseCase::class.java)
+
     private lateinit var viewModel: MoviesViewModel
 
     @Before
     fun setup() {
-        viewModel = MoviesViewModel(getMovieNowPlayingUseCase)
+        viewModel = MoviesViewModel(
+            getMovieNowPlayingUseCase,
+            getAllMovieFavoriteUseCase,
+            updateFavoriteMovieUseCase
+        )
     }
 
     @Test
     fun `get movie now playing`() {
         coroutinesTestRule.dispatcher.runBlockingTest {
-            val movies = MutableLiveData<Result<List<MovieNowPlaying>>>()
-            movies.value = dummyMovies()
-            Mockito.`when`(getMovieNowPlayingUseCase.invoke(UseCase.None)).thenReturn(movies.value)
+            val moviesPaging = PagetestDataSources()
+            Mockito.`when`(getMovieNowPlayingUseCase.invoke()).thenReturn(moviesPaging)
 
-            viewModel.getMovie()
-            verify(getMovieNowPlayingUseCase).invoke(UseCase.None)
-            viewModel.movie.observerTest {
-                when (it) {
-                    is Result.Success -> {
-                        assertNotNull(it.data)
-                        assertEquals(1, it.data.size)
-                    }
-                }
-            }
+            viewModel.getAllMovie()
+            verify(getMovieNowPlayingUseCase).invoke()
+
+            val movie = viewModel.getAllMovie().cachedIn(viewModel.viewModelScope)
+            assertNotNull(movie)
         }
 
     }
 
-    private fun dummyMovies(): Result<List<MovieNowPlaying>> {
-        val dummyListMovie = mutableListOf<MovieNowPlaying>()
-        dummyListMovie.add(
-            MovieNowPlaying(
-                1,
-                "desc",
-                "",
-                "movie"
+    class PagetestDataSources : PagingSource<Int, MovieEntity>(), Flow<PagingData<MovieEntity>> {
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieEntity> {
+            return LoadResult.Page(
+                dummyMovieEntities(),
+                null,
+                null
             )
-        )
-        return Result.Success(dummyListMovie)
+        }
+
+        private fun dummyMovieEntities(): List<MovieEntity> {
+            val list = mutableListOf<MovieEntity>()
+            MovieEntity(
+                0,
+                "oke",
+                "sip",
+                ""
+            )
+            return list
+        }
+
+        @InternalCoroutinesApi
+        override suspend fun collect(collector: FlowCollector<PagingData<MovieEntity>>) {
+        }
     }
+
 }

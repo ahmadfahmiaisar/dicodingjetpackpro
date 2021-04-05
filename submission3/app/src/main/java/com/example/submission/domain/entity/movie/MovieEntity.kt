@@ -9,7 +9,7 @@ import com.example.submission.domain.entity.movie.MovieNowPlaying
 data class MovieEntity(
     @PrimaryKey
     @ColumnInfo(name = "movieId")
-    var movieId: String = "",
+    var movieId: Int = 0,
 
     @ColumnInfo(name = "title")
     var title: String = "",

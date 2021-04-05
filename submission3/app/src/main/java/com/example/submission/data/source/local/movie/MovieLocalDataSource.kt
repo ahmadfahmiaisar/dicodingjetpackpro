@@ -1,6 +1,5 @@
 package com.example.submission.data.source.local.movie
 
-import androidx.paging.DataSource
 import androidx.paging.PagingSource
 import com.example.submission.data.database.dao.MovieDao
 import com.example.submission.domain.entity.movie.MovieEntity
@@ -9,14 +8,10 @@ import javax.inject.Inject
 class MovieLocalDataSource @Inject constructor(
     private val dao: MovieDao
 ) : MovieLocalService {
-    override fun getAllMovie(): DataSource.Factory<Int, MovieEntity> {
-        return dao.getAllMovie()
-    }
 
-    override suspend fun getMovie(pageSize: Int): List<MovieEntity> {
-        return dao.getMovie(pageSize)
+    override fun getMovie(): PagingSource<Int, MovieEntity> {
+        return dao.getMovie()
     }
-
     override suspend fun insertMovie(
         movies: List<MovieEntity>
     ) {
@@ -31,6 +26,10 @@ class MovieLocalDataSource @Inject constructor(
         isFavorite: Boolean, movieId: Int
     ) {
         dao.updateFavoriteMovie(isFavorite, movieId)
+    }
+
+    override suspend fun clearMovie() {
+        return dao.clearMovie()
     }
 
 }

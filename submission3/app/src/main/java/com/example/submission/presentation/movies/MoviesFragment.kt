@@ -14,8 +14,10 @@ import com.example.submission.util.RecycleViewLoadStateAdapter
 import com.example.submission.util.gone
 import com.example.submission.util.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
@@ -23,21 +25,20 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
     override fun getViewModelClass(): Class<MoviesViewModel> = MoviesViewModel::class.java
 
     private val adapter by lazy { MoviesRecycleAdapter() }
-    private val adapterMovieFavorite by lazy { MovieFavoriteRecycleAdapter(emptyList()) }
+    private val adapterMovieFavorite by lazy { MovieFavoriteRecycleAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecycleView()
         setupRecycleViewMovieFavorite()
-//        observeMovieNowPlaying()
-        observeMovieFavorite()
         observeSetStatusFavorite()
-//        vm.getMovie()
-        vm.getMovieFavorite()
 
         observeGetAllMovie()
+        observeGetAllMovieFavorite()
     }
+
+
 
     private fun observeGetAllMovie() {
         lifecycleScope.launch {
@@ -47,59 +48,20 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         }
     }
 
-    private fun observeMovieFavorite() {
-        vm.favoriteMovie.observe(viewLifecycleOwner, {
-            when (it) {
-                is Result.Loading -> {
-                    binding.shimmerViewFavoriteMovie.start(
-                        1,
-                        R.layout.placeholder_item_movie_favorite
-                    )
-                    binding.tvFavoriteMovie.gone()
-                    binding.horizontalScrollView.gone()
-                }
-                is Result.Success -> {
-                    binding.shimmerViewFavoriteMovie.stop()
-                    binding.tvFavoriteMovie.visible()
-                    binding.horizontalScrollView.visible()
-                    adapterMovieFavorite.refreshMovieFavorite(it.data)
-                }
-                is Result.Error -> {
-                    binding.shimmerViewFavoriteMovie.stop()
-                    binding.tvFavoriteMovie.visible()
-                    binding.tvFavoriteMovie.text = "you don't have a favorite movie"
-                    binding.horizontalScrollView.gone()
-                }
+    private fun observeGetAllMovieFavorite() {
+        lifecycleScope.launch {
+            vm.getAllMovieFavorite().collectLatest {
+                adapterMovieFavorite.submitData(it)
+                Timber.tag("ISINYAIT").d("$it")
             }
-        })
+        }
     }
 
-    private fun observeMovieNowPlaying() {
-        vm.movie.observe(viewLifecycleOwner, {
-            when (it) {
-                is Result.Loading -> {
-                    binding.shimmerView.start(9, R.layout.placeholder_item_movie)
-                    binding.rvMovie.gone()
-                }
-                is Result.Success -> {
-                    binding.rvMovie.visible()
-                    binding.shimmerView.stop()
-//                    adapter.refreshMovieNowPlaying(it.data)
-                }
-                is Result.Error -> {
-                    binding.shimmerView.stop()
-                    binding.rvMovie.gone()
-                }
-                else -> {
-                }
-            }
-        })
-    }
 
     private fun observeSetStatusFavorite() {
         vm.areStatusFavorite.observe(viewLifecycleOwner, {
             Toast.makeText(requireActivity(), "favorite changed", Toast.LENGTH_SHORT).show()
-            vm.getMovieFavorite()
+            observeGetAllMovieFavorite()
         })
     }
 
@@ -110,13 +72,13 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
             adapter.withLoadStateFooter(footer = RecycleViewLoadStateAdapter())
 
         adapter.setOnMoviePressed {
-            MovieDetailActivity.start(requireActivity(), it.id)
+            MovieDetailActivity.start(requireActivity(), it.movieId)
         }
         adapter.setOnFavoriteMovieChecked {
-            vm.setStatusFavoriteMovie(true, it.id)
+            vm.setStatusFavoriteMovie(true, it.movieId)
         }
         adapter.setOnFavoriteMovieUnChecked {
-            vm.setStatusFavoriteMovie(false, it.id)
+            vm.setStatusFavoriteMovie(false, it.movieId)
         }
     }
 
@@ -127,7 +89,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         binding.rvFavoriteMovie.adapter = adapterMovieFavorite
 
         adapterMovieFavorite.setOnMoviePressed {
-            MovieDetailActivity.start(requireActivity(), it.movieId.toInt())
+            MovieDetailActivity.start(requireActivity(), it.movieId)
         }
     }
 }

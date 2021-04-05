@@ -1,11 +1,10 @@
 package com.example.submission.data.source.local.movie
 
-import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import com.example.submission.domain.entity.movie.MovieEntity
 
 interface MovieLocalService {
-    fun getAllMovie(): DataSource.Factory<Int, MovieEntity>
-    suspend fun getMovie(pageSize: Int): List<MovieEntity>
+    fun getMovie(): PagingSource<Int, MovieEntity>
     suspend fun insertMovie(movies: List<MovieEntity>)
 
     suspend fun getAllMovieFavorite(): List<MovieEntity>
@@ -13,4 +12,6 @@ interface MovieLocalService {
         isFavorite: Boolean,
         movieId: Int
     )
+
+    suspend fun clearMovie()
 }

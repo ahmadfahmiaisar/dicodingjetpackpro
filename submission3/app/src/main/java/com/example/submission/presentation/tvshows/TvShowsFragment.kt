@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.submission.R
 import com.example.submission.abstraction.BaseFragment
 import com.example.submission.data.vo.Result
@@ -31,6 +32,7 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>()
         observeTvFavorite()
         observeSetStatusFavorite()
         vm.getTvShows()
+        vm.getTvFavorite()
     }
 
     private fun observeTvShowsResult() {
@@ -91,7 +93,7 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>()
 
 
     private fun setupRecycleView() {
-        val layoutManager = LinearLayoutManager(requireActivity())
+        val layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.rvTvShow.layoutManager = layoutManager
         binding.rvTvShow.adapter = adapter
 

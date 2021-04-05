@@ -22,7 +22,7 @@ class TvShowRepositoryImpl @Inject constructor(
 
     override suspend fun getTvOnTheAir(): Result<List<TvOnTheAir>> {
         val apiResult = tvShowRemoteDataSource.getTvOnTheAir(dispatcher.io)
-        val localResult = tvShowLocalDataSource.getAllTvFavorite()
+        val localResult = tvShowLocalDataSource.getTvShow()
         return when {
             !localResult.isNullOrEmpty() -> {
                 Result.Success(tvOnTheAirMapper.mapToDomain(localResult))
