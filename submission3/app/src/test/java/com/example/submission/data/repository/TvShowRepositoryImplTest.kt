@@ -1,11 +1,16 @@
 package com.example.submission.data.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingSource
 import com.example.submission.data.mapper.tvshow.TvOnTheAirMapper
 import com.example.submission.data.mapper.tvshow.TvShowDetailMapper
 import com.example.submission.data.response.tvshow.TvOnTheAirDto
 import com.example.submission.data.response.tvshow.TvShowDetailDto
+import com.example.submission.data.source.local.tvshow.TvShowLocalDataSource
+import com.example.submission.data.source.local.tvshow.remotekey.TvShowRemoteKeySource
 import com.example.submission.data.source.remote.TvShowRemoteDataSource
 import com.example.submission.data.vo.Result
+import com.example.submission.domain.entity.tvshow.TvShowEntity
 import com.example.submission.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -14,6 +19,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
 @ExperimentalCoroutinesApi
@@ -21,35 +27,44 @@ class TvShowRepositoryImplTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
-    private val remoteDataSource = Mockito.mock(TvShowRemoteDataSource::class.java)
+    private val remoteDataSource = mock(TvShowRemoteDataSource::class.java)
+
+    private val localDataSource = mock(TvShowLocalDataSource::class.java)
+
+    private val remoteKeySource = mock(TvShowRemoteKeySource::class.java)
 
     private lateinit var tvShowRepositoryImpl: TvShowRepositoryImpl
 
-    private var tvOnTheAirMapper = Mockito.mock(TvOnTheAirMapper::class.java)
+    private var tvOnTheAirMapper = mock(TvOnTheAirMapper::class.java)
 
-    private var tvShowDetailMapper = Mockito.mock(TvShowDetailMapper::class.java)
+    private var tvShowDetailMapper = mock(TvShowDetailMapper::class.java)
 
-/*
     @Before
     fun setup() {
         tvShowRepositoryImpl = TvShowRepositoryImpl(
             coroutinesTestRule.testDispatcherProvider,
             remoteDataSource,
             tvOnTheAirMapper,
-            tvShowDetailMapper
+            tvShowDetailMapper,
+            localDataSource,
+            remoteKeySource
         )
     }
-*/
 
+    @ExperimentalPagingApi
     @Test
     fun getTvShow() {
         coroutinesTestRule.runBlockingTest {
             val response = Result.Success(fakeTvShowResponse())
-            Mockito.`when`(remoteDataSource.getTvOnTheAir(coroutinesTestRule.dispatcher))
-                .thenReturn(response)
+            val dataSourceFactory =
+                mock(PagingSource::class.java) as PagingSource<Int, TvShowEntity>
+            Mockito.`when`(localDataSource.getTvShow())
+                .thenReturn(dataSourceFactory)
 
             tvShowRepositoryImpl.getTvOnTheAir()
-            verify(remoteDataSource).getTvOnTheAir(coroutinesTestRule.dispatcher)
+
+            localDataSource.getTvShow()
+            verify(localDataSource).getTvShow()
             Assert.assertNotNull(tvShowRepositoryImpl.getTvOnTheAir())
             Assert.assertEquals(1, response.data.results?.size)
         }
@@ -64,7 +79,7 @@ class TvShowRepositoryImplTest {
                 .thenReturn(response)
 
             tvShowRepositoryImpl.getTvShowDetail(tvId)
-            Mockito.verify(remoteDataSource).getTvShowDetail(coroutinesTestRule.dispatcher, tvId)
+            verify(remoteDataSource).getTvShowDetail(coroutinesTestRule.dispatcher, tvId)
             Assert.assertNotNull(tvShowRepositoryImpl.getTvShowDetail(tvId))
             Assert.assertEquals(1, response.data.id)
         }

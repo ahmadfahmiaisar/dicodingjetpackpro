@@ -1,17 +1,22 @@
 package com.example.submission.presentation.home.tvshows
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import com.example.submission.abstraction.UseCase
-import com.example.submission.data.vo.Result
-import com.example.submission.domain.entity.tvshow.TvOnTheAir
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.cachedIn
+import com.example.submission.domain.entity.movie.MovieEntity
+import com.example.submission.domain.entity.tvshow.TvShowEntity
+import com.example.submission.domain.usecase.tvshow.GetAllTvFavoriteUseCase
 import com.example.submission.domain.usecase.tvshow.GetTvOnTheAirUseCase
+import com.example.submission.domain.usecase.tvshow.UpdateFavoriteTvUseCase
 import com.example.submission.presentation.tvshows.TvShowsViewModel
 import com.example.submission.utils.CoroutinesTestRule
-import com.example.submission.utils.observerTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
@@ -32,36 +37,56 @@ class TvShowsViewModelTest {
     @Mock
     private val getTvOnTheAirUseCase = mock(GetTvOnTheAirUseCase::class.java)
 
+    @Mock
+    private val getAllTvFavoriteUseCase = mock(GetAllTvFavoriteUseCase::class.java)
+
+    @Mock
+    private val updateFavoriteTvUseCase = mock(UpdateFavoriteTvUseCase::class.java)
+
     private lateinit var viewModel: TvShowsViewModel
 
 
- /*   @Before
+    @Before
     fun setup() {
-        viewModel = TvShowsViewModel(getTvOnTheAirUseCase)
-    }*/
+        viewModel =
+            TvShowsViewModel(getTvOnTheAirUseCase, getAllTvFavoriteUseCase, updateFavoriteTvUseCase)
+    }
 
-   /* @Test
+    @Test
     fun getTvShows() {
         coroutinesTestRule.dispatcher.runBlockingTest {
-            val tvShow = MutableLiveData<Result<List<TvOnTheAir>>>()
-            tvShow.value = dummyTvShow()
-            Mockito.`when`(getTvOnTheAirUseCase.invoke(UseCase.None)).thenReturn(tvShow.value)
+            val tvShow = PagetestDataSources()
+            Mockito.`when`(getTvOnTheAirUseCase.invoke()).thenReturn(tvShow)
             viewModel.getTvShows()
-            Mockito.verify(getTvOnTheAirUseCase).invoke(UseCase.None)
-            viewModel.tvShows.observerTest {
-                when (it) {
-                    is Result.Success -> {
-                        assertNotNull(it.data)
-                        assertEquals(1, it.data.size)
-                    }
-                }
-            }
+            Mockito.verify(getTvOnTheAirUseCase).invoke()
+            val tvshows = viewModel.getTvShows().cachedIn(viewModel.viewModelScope)
+            assertNotNull(tvshows)
         }
-    }*/
+    }
 
-   /* private fun dummyTvShow(): Result<List<TvOnTheAir>> {
-        val dummyTv = mutableListOf<TvOnTheAir>()
-        dummyTv.add(TvOnTheAir(1, "tv", "desc", ""))
-        return Result.Success(dummyTv)
-    }*/
+    class PagetestDataSources : PagingSource<Int, TvShowEntity>(), Flow<PagingData<TvShowEntity>> {
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvShowEntity> {
+            return LoadResult.Page(
+                dummyMovieEntities(),
+                null,
+                null
+            )
+        }
+
+        private fun dummyMovieEntities(): List<TvShowEntity> {
+            val list = mutableListOf<TvShowEntity>()
+            MovieEntity(
+                0,
+                "oke",
+                "sip",
+                ""
+            )
+            return list
+        }
+
+        @InternalCoroutinesApi
+        override suspend fun collect(collector: FlowCollector<PagingData<TvShowEntity>>) {
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package com.example.submission.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingSource
+import com.example.submission.data.database.dao.MovieDao
 import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
 import com.example.submission.data.response.movie.MovieDetailDto
@@ -61,8 +62,9 @@ class MovieRepositoryImplTest {
             )
             movieRepositoryImpl.getAllMovie()
 
-            verify(localDataSource.getMovie())
-            Assert.assertNotNull(movieRepositoryImpl.getAllMovie())
+            localDataSource.getMovie()
+            verify(localDataSource).getMovie()
+            Assert.assertNotNull(localDataSource.getMovie())
             Assert.assertEquals(1, response.data.results.size)
         }
     }
