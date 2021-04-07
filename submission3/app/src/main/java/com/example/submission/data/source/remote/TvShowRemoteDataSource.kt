@@ -10,8 +10,11 @@ import javax.inject.Inject
 
 class TvShowRemoteDataSource @Inject constructor(private val tvShowService: TvShowService) :
     RemoteDataSource() {
-    suspend fun getTvOnTheAir(dispatcherProvider: CoroutineDispatcher): Result<TvOnTheAirDto> {
-        return safeApiCall(dispatcherProvider) { tvShowService.getTvOnTheAir() }
+    suspend fun getTvOnTheAir(
+        dispatcherProvider: CoroutineDispatcher,
+        page: Int
+    ): Result<TvOnTheAirDto> {
+        return safeApiCall(dispatcherProvider) { tvShowService.getTvOnTheAir(page = page) }
     }
 
     suspend fun getTvShowDetail(

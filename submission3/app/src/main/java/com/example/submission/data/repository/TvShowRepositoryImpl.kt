@@ -1,15 +1,23 @@
 package com.example.submission.data.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.submission.data.dispatcher.DispatcherProvider
 import com.example.submission.data.mapper.tvshow.TvOnTheAirMapper
 import com.example.submission.data.mapper.tvshow.TvShowDetailMapper
+import com.example.submission.data.source.local.pagingsource.PagingTvShowFavoriteDataSource
+import com.example.submission.data.source.local.remotemediator.TvShowRemoteMediator
 import com.example.submission.data.source.local.tvshow.TvShowLocalDataSource
+import com.example.submission.data.source.local.tvshow.remotekey.TvShowRemoteKeySource
 import com.example.submission.data.source.remote.TvShowRemoteDataSource
 import com.example.submission.data.vo.Result
-import com.example.submission.domain.entity.tvshow.TvOnTheAir
 import com.example.submission.domain.entity.tvshow.TvShowDetail
 import com.example.submission.domain.entity.tvshow.TvShowEntity
 import com.example.submission.domain.repository.TvShowRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class TvShowRepositoryImpl @Inject constructor(
@@ -17,31 +25,30 @@ class TvShowRepositoryImpl @Inject constructor(
     private val tvShowRemoteDataSource: TvShowRemoteDataSource,
     private val tvOnTheAirMapper: TvOnTheAirMapper,
     private val tvShowDetailMapper: TvShowDetailMapper,
-    private val tvShowLocalDataSource: TvShowLocalDataSource
+    private val tvShowLocalDataSource: TvShowLocalDataSource,
+    private val tvShowRemoteKeySource: TvShowRemoteKeySource
 ) : TvShowRepository {
 
-    override suspend fun getTvOnTheAir(): Result<List<TvOnTheAir>> {
-        val apiResult = tvShowRemoteDataSource.getTvOnTheAir(dispatcher.io)
-        val localResult = tvShowLocalDataSource.getTvShow()
-        return when {
-            !localResult.isNullOrEmpty() -> {
-                Result.Success(tvOnTheAirMapper.mapToDomain(localResult))
-            }
-            else -> {
-                when (apiResult) {
-                    is Result.Success -> {
-                        tvShowLocalDataSource.insertTvShow(tvOnTheAirMapper.toEntity(apiResult.data))
-                        Result.Success(tvOnTheAirMapper.map(apiResult.data))
-                    }
-                    is Result.Error -> Result.Error(
-                        apiResult.cause,
-                        apiResult.code,
-                        apiResult.errorMessage
-                    )
-                    else -> Result.Error()
-                }
-            }
-        }
+    @ExperimentalPagingApi
+    override suspend fun getTvOnTheAir(): Flow<PagingData<TvShowEntity>> {
+        val pagingSourceFactory = { tvShowLocalDataSource.getTvShow() }
+        val pagingConfig = PagingConfig(
+            pageSize = 22,
+            initialLoadSize = 22,
+            enablePlaceholders = false
+        )
+
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = pagingSourceFactory,
+            remoteMediator = TvShowRemoteMediator(
+                dispatcher,
+                tvShowRemoteDataSource,
+                tvShowLocalDataSource,
+                tvShowRemoteKeySource,
+                tvOnTheAirMapper
+            )
+        ).flow
     }
 
     override suspend fun getTvShowDetail(idTv: Int): Result<TvShowDetail> {
@@ -53,14 +60,17 @@ class TvShowRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAllTvFavorite(): Result<List<TvShowEntity>> {
-        val localResult = tvShowLocalDataSource.getAllTvFavorite()
-        return when {
-            localResult.isNullOrEmpty() -> Result.Error()
-            else -> {
-                Result.Success(localResult)
-            }
-        }
+    override fun getAllTvFavorite(): Flow<PagingData<TvShowEntity>> {
+        val pagingSourceFactory = { PagingTvShowFavoriteDataSource(tvShowLocalDataSource) }
+
+        val pagingLocalConfig = PagingConfig(
+            pageSize = 3,
+            initialLoadSize = 3
+        )
+        return Pager(
+            config = pagingLocalConfig,
+            pagingSourceFactory = pagingSourceFactory
+        ).flow.map { it }
     }
 
     override suspend fun updateTvFavorite(isFavorite: Boolean, tvId: Int) {

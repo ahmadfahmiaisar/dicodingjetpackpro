@@ -22,7 +22,7 @@ class TvOnTheAirMapper @Inject constructor() : Mapper<TvOnTheAirDto, List<TvOnTh
     fun mapToDomain(input: List<TvShowEntity>): List<TvOnTheAir> {
         return input.map {
             TvOnTheAir(
-                it.tvId.toInt(),
+                it.tvId,
                 it.name,
                 it.overview,
                 it.posterPath,
@@ -36,7 +36,7 @@ class TvOnTheAirMapper @Inject constructor() : Mapper<TvOnTheAirDto, List<TvOnTh
         input.results?.map {
             tvShows.add(
                 TvShowEntity(
-                    it.id.toString() ?: "",
+                    it.id ?: 0,
                     it.name ?: "",
                     it.posterPath ?: "",
                     it.overview ?: ""

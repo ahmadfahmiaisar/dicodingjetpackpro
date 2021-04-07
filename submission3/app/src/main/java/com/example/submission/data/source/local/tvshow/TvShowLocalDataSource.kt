@@ -1,14 +1,14 @@
 package com.example.submission.data.source.local.tvshow
 
+import androidx.paging.PagingSource
 import com.example.submission.data.database.dao.TvShowDao
 import com.example.submission.domain.entity.tvshow.TvShowEntity
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class TvShowLocalDataSource @Inject constructor(
     private val dao: TvShowDao
 ) : TvShowLocalService {
-    override suspend fun getTvShow(): List<TvShowEntity> {
+    override fun getTvShow(): PagingSource<Int, TvShowEntity> {
         return dao.getTvShow()
     }
 

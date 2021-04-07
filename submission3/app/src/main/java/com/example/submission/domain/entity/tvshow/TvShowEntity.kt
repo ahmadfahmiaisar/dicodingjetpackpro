@@ -9,7 +9,7 @@ import com.example.submission.domain.entity.tvshow.TvOnTheAir
 data class TvShowEntity(
     @PrimaryKey
     @ColumnInfo(name = "tvId")
-    var tvId: String = "",
+    var tvId: Int = 0,
 
     @ColumnInfo(name = "name")
     var name: String = "",

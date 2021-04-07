@@ -1,11 +1,11 @@
-package com.example.submission.data.source.local
+package com.example.submission.data.source.local.pagingsource
 
 import androidx.paging.PagingSource
 import com.example.submission.data.source.local.movie.MovieLocalDataSource
 import com.example.submission.domain.entity.movie.MovieEntity
 import timber.log.Timber
 
-class PagingMovieFavoriteLocalDataSource(
+class PagingMovieFavoriteDataSource(
   private val localDataSource: MovieLocalDataSource
 ): PagingSource<Int, MovieEntity>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieEntity> {

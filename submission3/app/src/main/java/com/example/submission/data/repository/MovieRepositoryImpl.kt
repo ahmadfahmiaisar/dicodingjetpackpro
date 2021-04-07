@@ -7,8 +7,8 @@ import androidx.paging.PagingData
 import com.example.submission.data.dispatcher.DispatcherProvider
 import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
-import com.example.submission.data.source.local.MovieRemoteMediator
-import com.example.submission.data.source.local.PagingMovieFavoriteLocalDataSource
+import com.example.submission.data.source.local.remotemediator.MovieRemoteMediator
+import com.example.submission.data.source.local.pagingsource.PagingMovieFavoriteDataSource
 import com.example.submission.data.source.local.movie.MovieLocalDataSource
 import com.example.submission.data.source.local.movie.remotekey.MovieRemoteKeySource
 import com.example.submission.data.source.remote.MovieRemoteDataSource
@@ -61,7 +61,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override fun getAllMovieFavorite(): Flow<PagingData<MovieEntity>> {
-        val pagingSourceFactory = { PagingMovieFavoriteLocalDataSource(localDataSource) }
+        val pagingSourceFactory = { PagingMovieFavoriteDataSource(localDataSource) }
 
         val pagingLocalConfig = PagingConfig(
             pageSize = 3,

@@ -3,6 +3,7 @@ package com.example.submission.presentation.tvshows
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.submission.R
@@ -14,80 +15,49 @@ import com.example.submission.presentation.tvshows.detail.TvShowDetailActivity
 import com.example.submission.util.gone
 import com.example.submission.util.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TvShowsFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>() {
     override fun getLayoutResourceId(): Int = R.layout.fragment_tv_shows
     override fun getViewModelClass(): Class<TvShowsViewModel> = TvShowsViewModel::class.java
 
-    private val adapter by lazy { TvShowsRecycleAdapter(emptyList()) }
-    private val adapterTvFavorite by lazy { TvFavoriteRecycleAdapter(emptyList()) }
+    private val adapter by lazy { TvShowsRecycleAdapter() }
+    private val adapterTvFavorite by lazy { TvFavoriteRecycleAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecycleView()
         setupRecycleViewTvFavorite()
-        observeTvShowsResult()
-        observeTvFavorite()
+
         observeSetStatusFavorite()
-        vm.getTvShows()
-        vm.getTvFavorite()
+
+        observeGetAllTvShowFavorite()
+        observeGetAllTvShow()
     }
 
-    private fun observeTvShowsResult() {
-        vm.tvShows.observe(viewLifecycleOwner, {
-            when (it) {
-                is Result.Loading -> {
-                    binding.shimmerView.start(9, R.layout.placeholder_item_movie)
-                    binding.rvTvShow.gone()
-                }
-                is Result.Success -> {
-                    binding.rvTvShow.visible()
-                    binding.shimmerView.stop()
-                    adapter.refreshTvShows(it.data)
-                }
-                is Result.Error -> {
-                    binding.shimmerView.stop()
-                    binding.rvTvShow.gone()
-                }
-                else -> {
-                }
+    private fun observeGetAllTvShow() {
+        lifecycleScope.launch {
+            vm.getTvShows().collectLatest {
+                adapter.submitData(it)
             }
-        })
+        }
     }
 
-    private fun observeTvFavorite() {
-        vm.favoriteTv.observe(viewLifecycleOwner, {
-            when (it) {
-                is Result.Loading -> {
-                    binding.shimmerViewFavoriteTV.start(
-                        1,
-                        R.layout.placeholder_item_movie_favorite
-                    )
-                    binding.tvFavoriteTV.gone()
-                    binding.horizontalScrollView.gone()
-                }
-                is Result.Success -> {
-                    binding.shimmerViewFavoriteTV.stop()
-                    binding.tvFavoriteTV.visible()
-                    binding.horizontalScrollView.visible()
-                    adapterTvFavorite.refreshMovieFavorite(it.data)
-                }
-                is Result.Error -> {
-                    binding.shimmerViewFavoriteTV.stop()
-                    binding.tvFavoriteTV.visible()
-                    binding.tvFavoriteTV.text = "you don't have a favorite movie"
-                    binding.horizontalScrollView.gone()
-                }
+    private fun observeGetAllTvShowFavorite() {
+        lifecycleScope.launch {
+            vm.getAllTvShowFavorite().collectLatest {
+                adapterTvFavorite.submitData(it)
             }
-        })
+        }
     }
 
     private fun observeSetStatusFavorite() {
         vm.areStatusFavorite.observe(viewLifecycleOwner, {
             Toast.makeText(requireActivity(), "favorite changed", Toast.LENGTH_SHORT).show()
-            vm.getTvFavorite()
+            observeGetAllTvShowFavorite()
         })
     }
 
@@ -98,13 +68,13 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>()
         binding.rvTvShow.adapter = adapter
 
         adapter.setOnTvShowPressed {
-            TvShowDetailActivity.start(requireActivity(), it.id)
+            TvShowDetailActivity.start(requireActivity(), it.tvId)
         }
         adapter.setOnFavoriteTvChecked {
-            vm.setStatusFavoriteMovie(true, it.id)
+            vm.setStatusFavoriteMovie(true, it.tvId)
         }
         adapter.setOnFavoriteTvUnChecked {
-            vm.setStatusFavoriteMovie(false, it.id)
+            vm.setStatusFavoriteMovie(false, it.tvId)
         }
     }
 
@@ -115,7 +85,7 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding, TvShowsViewModel>()
         binding.rvFavoriteTV.adapter = adapterTvFavorite
 
         adapterTvFavorite.setOnMoviePressed {
-            MovieDetailActivity.start(requireActivity(), it.tvId.toInt())
+            MovieDetailActivity.start(requireActivity(), it.tvId)
         }
     }
 }

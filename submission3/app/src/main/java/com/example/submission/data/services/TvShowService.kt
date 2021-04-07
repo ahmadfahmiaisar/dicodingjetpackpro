@@ -9,7 +9,10 @@ import retrofit2.http.Query
 
 interface TvShowService {
     @GET("tv/on_the_air")
-    suspend fun getTvOnTheAir(@Query("api_key") apiKey: String = BuildConfig.API_KEY): TvOnTheAirDto
+    suspend fun getTvOnTheAir(
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("page") page: Int
+    ): TvOnTheAirDto
 
     @GET("tv/{tvId}")
     suspend fun getTvShowDetail(

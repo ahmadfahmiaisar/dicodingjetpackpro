@@ -2,14 +2,16 @@ package com.example.submission.presentation.tvshows
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.submission.databinding.ItemTvFavoriteBinding
 import com.example.submission.domain.entity.tvshow.TvShowEntity
 import com.example.submission.util.IMAGE_BASE_URL_POSTER
 import com.example.submission.util.loadUrl
 
-class TvFavoriteRecycleAdapter(private var movieFavorite: List<TvShowEntity>) :
-    RecyclerView.Adapter<TvFavoriteRecycleAdapter.ViewHolder>() {
+class TvFavoriteRecycleAdapter :
+    PagingDataAdapter<TvShowEntity, TvFavoriteRecycleAdapter.ViewHolder>(differCallback) {
 
     private var onMoviePressed: (TvShowEntity) -> Unit = {}
 
@@ -20,10 +22,8 @@ class TvFavoriteRecycleAdapter(private var movieFavorite: List<TvShowEntity>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(movieFavorite[position], onMoviePressed)
+        holder.bind(getItem(position) ?: return, onMoviePressed)
     }
-
-    override fun getItemCount(): Int = movieFavorite.size
 
     class ViewHolder(private val binding: ItemTvFavoriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -36,12 +36,26 @@ class TvFavoriteRecycleAdapter(private var movieFavorite: List<TvShowEntity>) :
         }
     }
 
-    fun refreshMovieFavorite(movieFavorite: List<TvShowEntity>) {
-        this.movieFavorite = movieFavorite
-        notifyDataSetChanged()
-    }
-
     fun setOnMoviePressed(movie: (TvShowEntity) -> Unit) {
         this.onMoviePressed = movie
+    }
+
+    companion object {
+        val differCallback = object : DiffUtil.ItemCallback<TvShowEntity>() {
+            override fun areItemsTheSame(
+                oldItem: TvShowEntity,
+                newItem: TvShowEntity
+            ): Boolean {
+                return oldItem.tvId == newItem.tvId
+            }
+
+            override fun areContentsTheSame(
+                oldItem: TvShowEntity,
+                newItem: TvShowEntity
+            ): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 }

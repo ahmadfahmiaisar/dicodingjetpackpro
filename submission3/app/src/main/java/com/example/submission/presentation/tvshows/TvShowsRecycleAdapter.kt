@@ -2,17 +2,20 @@ package com.example.submission.presentation.tvshows
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.submission.R
 import com.example.submission.databinding.ItemTvShowBinding
-import com.example.submission.domain.entity.tvshow.TvOnTheAir
+import com.example.submission.domain.entity.tvshow.TvShowEntity
 
-class TvShowsRecycleAdapter(private var tvshows: List<TvOnTheAir>) :
-    RecyclerView.Adapter<TvShowsRecycleAdapter.ViewHolder>() {
+class TvShowsRecycleAdapter : PagingDataAdapter<TvShowEntity, TvShowsRecycleAdapter.ViewHolder>(
+    differCallback
+) {
 
-    private var onTvShowPressed: (TvOnTheAir) -> Unit = {}
-    private var onFavoriteTvChecked: (TvOnTheAir) -> Unit = {}
-    private var onFavoriteTvUnChecked: (TvOnTheAir) -> Unit = {}
+    private var onTvShowPressed: (TvShowEntity) -> Unit = {}
+    private var onFavoriteTvChecked: (TvShowEntity) -> Unit = {}
+    private var onFavoriteTvUnChecked: (TvShowEntity) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,18 +24,22 @@ class TvShowsRecycleAdapter(private var tvshows: List<TvOnTheAir>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(tvshows[position], onTvShowPressed, onFavoriteTvChecked, onFavoriteTvUnChecked)
-    }
+        holder.bind(
+            getItem(position) ?: return,
+            onTvShowPressed,
+            onFavoriteTvChecked,
+            onFavoriteTvUnChecked
+        )
 
-    override fun getItemCount(): Int = tvshows.size
+    }
 
     class ViewHolder(private val binding: ItemTvShowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            tvOnTheAir: TvOnTheAir,
-            onTvShowPressed: (TvOnTheAir) -> Unit,
-            onFavoriteTvChecked: (TvOnTheAir) -> Unit,
-            onFavoriteTvUnChecked: (TvOnTheAir) -> Unit
+            tvOnTheAir: TvShowEntity,
+            onTvShowPressed: (TvShowEntity) -> Unit,
+            onFavoriteTvChecked: (TvShowEntity) -> Unit,
+            onFavoriteTvUnChecked: (TvShowEntity) -> Unit
         ) {
             binding.tvshow = tvOnTheAir
             binding.root.setOnClickListener { onTvShowPressed(tvOnTheAir) }
@@ -56,21 +63,34 @@ class TvShowsRecycleAdapter(private var tvshows: List<TvOnTheAir>) :
         }
     }
 
-    fun refreshTvShows(tvShow: List<TvOnTheAir>) {
-        this.tvshows = tvShow
-        notifyDataSetChanged()
-    }
-
-    fun setOnTvShowPressed(tvShow: (TvOnTheAir) -> Unit) {
+    fun setOnTvShowPressed(tvShow: (TvShowEntity) -> Unit) {
         this.onTvShowPressed = tvShow
     }
 
-    fun setOnFavoriteTvChecked(tvShow: (TvOnTheAir) -> Unit) {
+    fun setOnFavoriteTvChecked(tvShow: (TvShowEntity) -> Unit) {
         this.onFavoriteTvChecked = tvShow
     }
 
-    fun setOnFavoriteTvUnChecked(tvShow: (TvOnTheAir) -> Unit) {
+    fun setOnFavoriteTvUnChecked(tvShow: (TvShowEntity) -> Unit) {
         this.onFavoriteTvUnChecked = tvShow
     }
 
+    companion object {
+        val differCallback = object : DiffUtil.ItemCallback<TvShowEntity>() {
+            override fun areItemsTheSame(
+                oldItem: TvShowEntity,
+                newItem: TvShowEntity
+            ): Boolean {
+                return oldItem.tvId == newItem.tvId
+            }
+
+            override fun areContentsTheSame(
+                oldItem: TvShowEntity,
+                newItem: TvShowEntity
+            ): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.submission.data.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -8,8 +9,8 @@ import com.example.submission.domain.entity.tvshow.TvShowEntity
 
 @Dao
 abstract class TvShowDao {
-    @Query("SELECT * FROM tvshows ORDER BY tvId")
-    abstract suspend fun getTvShow(): List<TvShowEntity>
+    @Query("SELECT * FROM tvshows ORDER BY tvId ASC")
+    abstract fun getTvShow(): PagingSource<Int, TvShowEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertTvShow(tvShowEntity: List<TvShowEntity>)
