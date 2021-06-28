@@ -71,6 +71,21 @@ class TvShowRepositoryImplTest {
     }
 
     @Test
+    fun getTvFavorite() {
+        coroutinesTestRule.runBlockingTest {
+            val dataCallback = fakeListTvEntity()
+            Mockito.`when`(localDataSource.getAllTvFavorite()).thenReturn(
+                dataCallback
+            )
+            tvShowRepositoryImpl.getAllTvFavorite()
+
+            localDataSource.getAllTvFavorite()
+            verify(localDataSource).getAllTvFavorite()
+            Assert.assertNotNull(localDataSource.getAllTvFavorite())
+        }
+    }
+
+    @Test
     fun getDetailTvShow() {
         coroutinesTestRule.runBlockingTest {
             val tvId = 1
@@ -92,5 +107,14 @@ class TvShowRepositoryImplTest {
 
     private fun fakeDetailTvResponse(): TvShowDetailDto {
         return TvShowDetailDto(1, "", "", 0.0, "", "", 0.0, 0)
+    }
+    private fun fakeListTvEntity(): List<TvShowEntity> {
+        val listTv = mutableListOf<TvShowEntity>()
+        listTv.add(
+            TvShowEntity(
+                0, "title", "poster", "overview", false
+            )
+        )
+        return listTv
     }
 }

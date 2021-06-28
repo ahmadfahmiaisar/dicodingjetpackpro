@@ -2,7 +2,6 @@ package com.example.submission.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.submission.App
 import com.example.submission.data.database.AppDatabase
 import com.example.submission.data.database.dao.MovieDao
 import com.example.submission.data.database.dao.MovieRemoteKeysDao

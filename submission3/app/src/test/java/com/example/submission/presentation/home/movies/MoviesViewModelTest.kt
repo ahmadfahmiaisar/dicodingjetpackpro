@@ -57,6 +57,18 @@ class MoviesViewModelTest {
     }
 
     @Test
+    fun addMovieFavorite() {
+        coroutinesTestRule.dispatcher.runBlockingTest {
+            val movieId = 19995
+            Mockito.`when`(updateFavoriteMovieUseCase.invoke(true, movieId)).thenReturn(Unit)
+
+            viewModel.setStatusFavoriteMovie(true, movieId)
+            verify(updateFavoriteMovieUseCase).invoke(true, movieId)
+            assertEquals(viewModel.areStatusFavorite.value, Unit)
+        }
+    }
+
+    @Test
     fun `get movie now playing`() {
         coroutinesTestRule.dispatcher.runBlockingTest {
             val moviesPaging = PagetestDataSources()

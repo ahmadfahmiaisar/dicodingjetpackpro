@@ -16,7 +16,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import androidx.test.espresso.matcher.ViewMatchers
 
 class MoviesFragmentTest {
 
@@ -59,7 +58,6 @@ class MoviesFragmentTest {
         onView(withId(R.id.tvTitleMovie)).check(matches(isDisplayed()))
         onView(withId(R.id.tvTitleMovie)).check(matches(withText("Wonder Woman 1984")))
         onView(withId(R.id.tvMoviePopularity)).check(matches(isDisplayed()))
-        onView(withId(R.id.tvMoviePopularity)).check(matches(withText("popularity: 2187.466")))
         onView(withId(R.id.tvMovieReleaseDate)).check(matches(isDisplayed()))
         onView(withId(R.id.tvMovieVoteAverage)).check(matches(isDisplayed()))
         onView(withId(R.id.tvMovieVoteCount)).check(matches(isDisplayed()))

@@ -7,10 +7,10 @@ import androidx.paging.PagingData
 import com.example.submission.data.dispatcher.DispatcherProvider
 import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
-import com.example.submission.data.source.local.remotemediator.MovieRemoteMediator
-import com.example.submission.data.source.local.pagingsource.PagingMovieFavoriteDataSource
 import com.example.submission.data.source.local.movie.MovieLocalDataSource
 import com.example.submission.data.source.local.movie.remotekey.MovieRemoteKeySource
+import com.example.submission.data.source.local.pagingsource.PagingMovieFavoriteDataSource
+import com.example.submission.data.source.local.remotemediator.MovieRemoteMediator
 import com.example.submission.data.source.remote.MovieRemoteDataSource
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieDetail
@@ -51,15 +51,6 @@ class MovieRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override suspend fun getMovieDetail(movieId: Int): Result<MovieDetail> {
-        val apiResult = remoteDataSource.getMovieDetail(dispatcher.io, movieId)
-        return when (apiResult) {
-            is Result.Success -> Result.Success(movieDetailMapper.map(apiResult.data))
-            is Result.Error -> Result.Error(apiResult.cause, apiResult.code, apiResult.errorMessage)
-            else -> Result.Error()
-        }
-    }
-
     override fun getAllMovieFavorite(): Flow<PagingData<MovieEntity>> {
         val pagingSourceFactory = { PagingMovieFavoriteDataSource(localDataSource) }
 
@@ -71,6 +62,15 @@ class MovieRepositoryImpl @Inject constructor(
             config = pagingLocalConfig,
             pagingSourceFactory = pagingSourceFactory
         ).flow.map { it }
+    }
+
+    override suspend fun getMovieDetail(movieId: Int): Result<MovieDetail> {
+        val apiResult = remoteDataSource.getMovieDetail(dispatcher.io, movieId)
+        return when (apiResult) {
+            is Result.Success -> Result.Success(movieDetailMapper.map(apiResult.data))
+            is Result.Error -> Result.Error(apiResult.cause, apiResult.code, apiResult.errorMessage)
+            else -> Result.Error()
+        }
     }
 
     override suspend fun updateFavoriteMovie(isFavorite: Boolean, movieId: Int) {

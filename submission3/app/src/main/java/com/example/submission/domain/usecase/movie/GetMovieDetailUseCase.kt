@@ -3,7 +3,6 @@ package com.example.submission.domain.usecase.movie
 import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.movie.MovieDetail
-import com.example.submission.domain.entity.movie.MovieDetailUiModel
 import com.example.submission.domain.repository.MovieRepository
 import com.example.submission.util.IMAGE_BASE_URL_POSTER
 import javax.inject.Inject

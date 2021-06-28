@@ -2,7 +2,6 @@ package com.example.submission.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingSource
-import com.example.submission.data.database.dao.MovieDao
 import com.example.submission.data.mapper.movie.MovieDetailMapper
 import com.example.submission.data.mapper.movie.MovieMapper
 import com.example.submission.data.response.movie.MovieDetailDto
@@ -70,6 +69,22 @@ class MovieRepositoryImplTest {
     }
 
     @Test
+    fun getMovieFavorite() {
+        coroutinesTestRule.runBlockingTest {
+            val dataCallback = fakeListMovieEntity()
+            `when`(localDataSource.getAllMovieFavorite()).thenReturn(
+                dataCallback
+            )
+            movieRepositoryImpl.getAllMovieFavorite()
+
+            localDataSource.getAllMovieFavorite()
+            verify(localDataSource).getAllMovieFavorite()
+            Assert.assertNotNull(localDataSource.getAllMovieFavorite())
+        }
+
+    }
+
+    @Test
     fun getDetailMovie() {
         coroutinesTestRule.runBlockingTest {
             val movieId = 1
@@ -96,5 +111,15 @@ class MovieRepositoryImplTest {
 
     private fun fakeDetailMovieResponse(): MovieDetailDto {
         return MovieDetailDto(1, "", 0f, "", "", "", 0f, 0)
+    }
+
+    private fun fakeListMovieEntity(): List<MovieEntity> {
+        val listMovie = mutableListOf<MovieEntity>()
+        listMovie.add(
+            MovieEntity(
+                0, "title", "poster", "overview", false
+            )
+        )
+        return listMovie
     }
 }

@@ -8,12 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.submission.R
 import com.example.submission.abstraction.BaseFragment
-import com.example.submission.data.vo.Result
 import com.example.submission.databinding.FragmentTvShowsBinding
 import com.example.submission.presentation.movies.detail.MovieDetailActivity
 import com.example.submission.presentation.tvshows.detail.TvShowDetailActivity
-import com.example.submission.util.gone
-import com.example.submission.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

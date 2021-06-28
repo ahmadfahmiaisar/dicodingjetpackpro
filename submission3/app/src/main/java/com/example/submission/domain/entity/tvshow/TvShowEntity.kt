@@ -3,7 +3,6 @@ package com.example.submission.domain.entity.tvshow
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.submission.domain.entity.tvshow.TvOnTheAir
 
 @Entity(tableName = "tvshows")
 data class TvShowEntity(

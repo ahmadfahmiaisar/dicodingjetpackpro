@@ -39,7 +39,6 @@ class HomeActivityTest {
         val title = adapter.getPageTitle(0)
         assertThat(title.toString(), Matchers.equalTo("MOVIES"))
 
-        //if want to check second tab title just change page title position
     }
 
     @Test

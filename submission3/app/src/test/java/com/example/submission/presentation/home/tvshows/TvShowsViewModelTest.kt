@@ -17,6 +17,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
@@ -24,6 +25,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
 @ExperimentalCoroutinesApi
 class TvShowsViewModelTest {
@@ -50,6 +52,18 @@ class TvShowsViewModelTest {
     fun setup() {
         viewModel =
             TvShowsViewModel(getTvOnTheAirUseCase, getAllTvFavoriteUseCase, updateFavoriteTvUseCase)
+    }
+
+    @Test
+    fun addTvFavorite() {
+        coroutinesTestRule.dispatcher.runBlockingTest {
+            val tvId = 456
+            Mockito.`when`(updateFavoriteTvUseCase.invoke(true, tvId)).thenReturn(Unit)
+
+            viewModel.setStatusFavoriteMovie(true, tvId)
+            verify(updateFavoriteTvUseCase).invoke(true, tvId)
+            assertEquals(viewModel.areStatusFavorite.value, Unit)
+        }
     }
 
     @Test

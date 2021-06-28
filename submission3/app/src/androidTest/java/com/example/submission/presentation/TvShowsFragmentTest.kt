@@ -63,7 +63,6 @@ class TvShowsFragmentTest {
         onView(withId(R.id.tvTitleTv)).check(matches(isDisplayed()))
         onView(withId(R.id.tvTitleTv)).check(matches(withText("WandaVision")))
         onView(withId(R.id.tvPopularityTvShow)).check(matches(isDisplayed()))
-        onView(withId(R.id.tvPopularityTvShow)).check(matches(withText("popularity: 804.227")))
         onView(withId(R.id.tvDateTvShow)).check(matches(isDisplayed()))
         onView(withId(R.id.tvVoteAverageTvShow)).check(matches(isDisplayed()))
         onView(withId(R.id.tvVoteCountTvShow)).check(matches(isDisplayed()))

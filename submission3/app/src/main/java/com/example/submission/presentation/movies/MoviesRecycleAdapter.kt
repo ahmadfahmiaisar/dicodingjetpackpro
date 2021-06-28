@@ -9,7 +9,6 @@ import com.example.submission.R
 import com.example.submission.databinding.ItemMoviesBinding
 import com.example.submission.domain.entity.movie.MovieEntity
 import com.example.submission.util.loadUrl
-import timber.log.Timber
 
 class MoviesRecycleAdapter :
     PagingDataAdapter<MovieEntity, MoviesRecycleAdapter.ViewHolder>(differCallback) {

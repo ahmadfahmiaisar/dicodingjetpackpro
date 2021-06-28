@@ -1,12 +1,12 @@
 package com.example.submission.data.source.utils
 
 import com.example.submission.data.vo.HttpResult
+import com.example.submission.data.vo.Result
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
-import com.example.submission.data.vo.Result
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 

@@ -1,7 +1,6 @@
 package com.example.submission.domain.usecase.tvshow
 
 import androidx.paging.PagingData
-import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvShowEntity
 import com.example.submission.domain.repository.TvShowRepository
 import kotlinx.coroutines.flow.Flow

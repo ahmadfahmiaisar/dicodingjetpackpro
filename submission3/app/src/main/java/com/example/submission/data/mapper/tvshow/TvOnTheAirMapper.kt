@@ -1,9 +1,9 @@
 package com.example.submission.data.mapper.tvshow
 
 import com.example.submission.abstraction.Mapper
-import com.example.submission.domain.entity.tvshow.TvShowEntity
 import com.example.submission.data.response.tvshow.TvOnTheAirDto
 import com.example.submission.domain.entity.tvshow.TvOnTheAir
+import com.example.submission.domain.entity.tvshow.TvShowEntity
 import javax.inject.Inject
 
 class TvOnTheAirMapper @Inject constructor() : Mapper<TvOnTheAirDto, List<TvOnTheAir>>() {

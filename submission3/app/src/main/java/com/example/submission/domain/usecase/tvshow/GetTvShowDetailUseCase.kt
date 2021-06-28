@@ -3,7 +3,6 @@ package com.example.submission.domain.usecase.tvshow
 import com.example.submission.abstraction.UseCase
 import com.example.submission.data.vo.Result
 import com.example.submission.domain.entity.tvshow.TvShowDetail
-import com.example.submission.domain.entity.tvshow.TvShowDetailUiModel
 import com.example.submission.domain.repository.TvShowRepository
 import com.example.submission.util.IMAGE_BASE_URL_POSTER
 import javax.inject.Inject

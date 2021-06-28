@@ -3,7 +3,6 @@ package com.example.submission.domain.entity.movie
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.submission.domain.entity.movie.MovieNowPlaying
 
 @Entity(tableName = "movie")
 data class MovieEntity(

@@ -3,7 +3,6 @@ package com.example.submission.domain.usecase.movie
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.submission.domain.entity.movie.MovieEntity
-import com.example.submission.domain.entity.movie.MovieNowPlaying
 import com.example.submission.domain.repository.MovieRepository
 import com.example.submission.util.IMAGE_BASE_URL_POSTER
 import kotlinx.coroutines.flow.Flow

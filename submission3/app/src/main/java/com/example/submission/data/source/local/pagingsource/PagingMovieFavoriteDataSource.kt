@@ -3,7 +3,6 @@ package com.example.submission.data.source.local.pagingsource
 import androidx.paging.PagingSource
 import com.example.submission.data.source.local.movie.MovieLocalDataSource
 import com.example.submission.domain.entity.movie.MovieEntity
-import timber.log.Timber
 
 class PagingMovieFavoriteDataSource(
   private val localDataSource: MovieLocalDataSource
